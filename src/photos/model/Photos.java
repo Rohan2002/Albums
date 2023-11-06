@@ -1,0 +1,2 @@
+package photos.model;
+
