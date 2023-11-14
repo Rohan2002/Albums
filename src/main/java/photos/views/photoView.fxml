@@ -33,11 +33,11 @@
             </AnchorPane>
         </content>
       </ScrollPane>
-      <TextField fx:id="addOrRemoveOrSearchTagTextBox" layoutX="347.0" layoutY="566.0" prefHeight="26.0" prefWidth="239.0" />
+      <TextField fx:id="addOrRemoveOrSearchTagTextBox" promptText="name: Adam" layoutX="347.0" layoutY="566.0" prefHeight="26.0" prefWidth="239.0" />
       <Button fx:id="addTagButton" layoutX="347.0" layoutY="601.0" mnemonicParsing="false" text="Add Tag" />
       <Button fx:id="searchTagButton" layoutX="506.0" layoutY="601.0" mnemonicParsing="false" text="Search Tag" />
       <Button fx:id="removeTagButton" layoutX="415.0" layoutY="601.0" mnemonicParsing="false" text="Remove Tag" />
-      <TextField fx:id="changeOrSearchDateTextBox" layoutX="14.0" layoutY="566.0" prefHeight="26.0" prefWidth="239.0" />
+      <TextField fx:id="changeOrSearchDateTextBox" promptText="1/1/2020" layoutX="14.0" layoutY="566.0" prefHeight="26.0" prefWidth="239.0" />
       <Label layoutX="269.0" layoutY="225.0" prefHeight="29.0" prefWidth="61.0" text="Photo" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
@@ -47,7 +47,7 @@
       <Button fx:id="logOutButton" layoutX="517.0" layoutY="20.0" mnemonicParsing="false" text="Log Out" />
       <Button fx:id="addPhotoButton" layoutX="26.0" layoutY="159.0" mnemonicParsing="false" text="Add a Photo" />
       <Button fx:id="deletePhotoButton" layoutX="482.0" layoutY="159.0" mnemonicParsing="false" text="Delete a Photo" />
-      <TextField fx:id="addOrChangeCaptionTextBox" layoutX="131.0" layoutY="520.0" prefHeight="26.0" prefWidth="239.0" />
+      <TextField fx:id="addOrChangeCaptionTextBox" promptText="'This was a great trip'"  layoutX="131.0" layoutY="520.0" prefHeight="26.0" prefWidth="239.0" />
       <Button fx:id="addOrChangeCaptionButton" layoutX="376.0" layoutY="520.0" mnemonicParsing="false" text="Add or Change Caption" />
       <Separator fx:id="seperator2" layoutX="-1.0" layoutY="503.0" prefHeight="5.0" prefWidth="600.0" />
       <Separator fx:id="seperator1" layoutY="213.0" prefHeight="5.0" prefWidth="600.0" />
