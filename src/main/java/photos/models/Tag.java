@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.ArrayList;
 
 /**
  * @author Saman Sathenjeri
@@ -17,7 +15,7 @@ import java.util.ArrayList;
  *
  */
 
-public class Album implements Serializable
+public class Tag implements Serializable
 {
     /**
 	 * Default Serial Number
@@ -35,55 +33,24 @@ public class Album implements Serializable
 	public static final String storeFile = "photos.dat";
 
     /**
-	 * Name of the Album
-	 */
-    public String albumName;
+     * name of tag
+     */
+    String tagName;
 
     /**
-	 * List of Photos in an album
-	 */
-    public ArrayList<Photo> photos;
+     * data of tag
+     */
+    String tagData;
 
-    /**
-	 * Constructor
-	 */
-    public Album()
+    public Tag()
     {
         //no arg constructor
     }
 
-    /**
-	 * Constructor
-     * @param albumName
-	 */
-    public Album(String albumName)
+    public Tag(String tagName, String tagData)
     {
-        this.albumName = albumName;
-    }
-
-    /**
-	 * Getter for list of photos in an album
-     * @return photos
-	 */
-    public ArrayList<Photo> getPhotosInAlbum() {
-        return this.photos;
-    }
-
-    /**
-	 * Setter for list of photos in an album
-     * @param photos
-	 */
-    public void setPhotosInAlbum(ArrayList<Photo> photos) {
-        this.photos = photos;
-    }
-
-    /**
-	 * Helper to return the number of photos in an album
-     * @return photos.size()
-	 */
-    public int getNumOfPhotosInAlbum()
-    {
-        return this.photos.size();
+        this.tagName = tagName;
+        this.tagData = tagData;
     }
 
     /**
