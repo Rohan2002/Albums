@@ -1,2 +1,4 @@
 lib/
 .vscode
+data/*
+!data/stock

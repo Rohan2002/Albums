@@ -5,11 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.java.photos.utils.Tools;
 
 public class Photos extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        System.out.println(Tools.getDataDir());
         Parent root = FXMLLoader.load(getClass().getResource("views/auth.fxml"));
         primaryStage.setTitle("Photos59");
         primaryStage.setScene(new Scene(root, 400, 300));
