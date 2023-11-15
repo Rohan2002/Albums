@@ -1,9 +1,20 @@
+/**
+ * General common utilities function used across the app codebase.
+ * 
+ * @author Rohan Deshpande, Saman Sathenjeri
+ * @version 1.0
+ */
 package main.java.photos.utils;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Tools {
+    /**
+     * Get the data directory from anywhere in the project.
+     * @return The File object that represents the main data directory of the app.
+     * @throws IOException If the data directory is not found.
+     */
     public static File getDataDir() throws IOException {
         String projectRootDirectory = System.getProperty("user.dir");
 
@@ -17,6 +28,11 @@ public class Tools {
         return dataDirFileObj;
     }
 
+    /**
+     * Recursively delete a directory.
+     * @param directory to delete.
+     * @return True if the directory is deleted else False
+     */
     public static boolean deleteDirectory(File directory) {
         if (!directory.isDirectory()) {
             return false;

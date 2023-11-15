@@ -1,3 +1,10 @@
+/**
+ * This class is responsible for the Authentication of the user in the
+ * application.
+ * 
+ * @author Rohan Deshpande
+ * @version 1.0
+ */
 package main.java.photos.controllers;
 
 import java.io.IOException;
@@ -17,17 +24,32 @@ import main.java.photos.utils.ErrorMessage;
 import javafx.scene.control.PasswordField;
 
 public class LoginController {
+    /**
+     * Data structure to store the User objects.
+     */
     private UserList userList;
 
+    /**
+     * Username field for the user auth.
+     */
     @FXML
     private TextField usernameField;
 
+    /**
+     * Password field for the user auth.
+     */
     @FXML
     private PasswordField passwordField;
 
+    /**
+     * Login button for the user auth.
+     */
     @FXML
     private Button loginButton;
 
+    /**
+     * Initialize user list with 2 special usernames called stock and admin
+     */
     @FXML
     private void initialize() {
         // Initialize the controller (called after FXML load)
@@ -53,6 +75,9 @@ public class LoginController {
         }
     }
 
+    /**
+     * After successful auth for admin, display the admin subsystem page.
+     */
     private void adminView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/adminView.fxml"));
@@ -71,6 +96,9 @@ public class LoginController {
         }
     }
 
+    /**
+     * After successful auth for non-admin, display the non-admin subsystem page which is the album logic.
+     */
     private void albumView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/albumView.fxml"));
@@ -88,7 +116,11 @@ public class LoginController {
             ErrorMessage.showError(ErrorCode.APPERROR, "Cannot login as regular user", e.getMessage());
         }
     }
-
+    
+    /**
+     * Responsible for checking authentication of the actual user.
+     * @param event
+     */
     @FXML
     private void loginAction(ActionEvent event) {
         System.out.println(usernameField);

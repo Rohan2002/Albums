@@ -1,3 +1,10 @@
+/**
+ * This class is responsible for the Admin Subsystem.
+ * The Admin subsystem can create, delete and view users on the application.
+ * 
+ * @author Rohan Deshpande
+ * @version 1.0
+ */
 package main.java.photos.controllers;
 
 import java.io.IOException;
@@ -16,26 +23,50 @@ import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 
 public class AdminController {
+    /**
+     * Data structuure to store the userList.
+     */
     private UserList userList;
 
+    /**
+     * The username field for the create usedr logic.
+     */
     @FXML
     private TextField createUsername;
 
+    /**
+     * The password field for the create user logic.
+     */
     @FXML
     private PasswordField createPassword;
 
+    /**
+     * The username field for the delete user logic.
+     */
     @FXML
     private TextField deleteUsername;
 
+    /**
+     * The button for create user logic.
+     */
     @FXML
     private Button createUserButton;
 
+    /**
+     * The button for the delete user logic.
+     */
     @FXML
     private Button deleteUserButton;
 
+    /**
+     * The button to logout user.
+     */
     @FXML
     private Button logOutButton;
 
+    /**
+     * userListView is a container for the list of users.
+     */
     @FXML
     private ListView<User> userListView;
 
@@ -44,6 +75,9 @@ public class AdminController {
         // may need to make this an interface/inherited class (used in multiple views)
     }
 
+    /**
+     * Init user list for app and app view.
+     */
     @FXML
     private void initialize() {
         try {
@@ -57,6 +91,12 @@ public class AdminController {
         }
     }
 
+    /**
+     * The create user logic.
+     * 
+     * The username must not exist in the list of users in order to be added successfully.
+     * @param event
+     */
     @FXML
     private void createUser(ActionEvent event) {
         String newUsername = createUsername.getText();
@@ -72,7 +112,13 @@ public class AdminController {
         }
         updateListView(this.userList);
     }
-
+    
+    /**
+     * The delete user logic.
+     * Admin and Stock username as special app username and cannot be deleted via app.
+     * The username must exist in the list of users in order to be deleted successfully.
+     * @param event
+     */
     @FXML
     private void deleteUser(ActionEvent event) {
         String deleteUser = deleteUsername.getText();
@@ -92,6 +138,10 @@ public class AdminController {
         updateListView(this.userList);
     }
 
+    /**
+     * Routine to update the user list view after add/delete.
+     * @param u
+     */
     private void updateListView(UserList u) {
         ObservableList<User> items = FXCollections.observableArrayList(u.getUserList());
 
