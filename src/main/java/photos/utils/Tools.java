@@ -16,4 +16,21 @@ public class Tools {
 
         return dataDirFileObj;
     }
+
+    public static boolean deleteDirectory(File directory) {
+        if (!directory.isDirectory()) {
+            return false;
+        }
+        // Get all files and subdirectories in the directory
+        File[] allContents = directory.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                // Recursive delete for subdirectories
+                deleteDirectory(file);
+            }
+        }
+
+        // Finally, delete the empty directory
+        return directory.delete();
+    }
 }

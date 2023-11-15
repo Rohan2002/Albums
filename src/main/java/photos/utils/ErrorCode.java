@@ -8,7 +8,9 @@ package main.java.photos.utils;
 
 public enum ErrorCode {
     AUTHERROR("Authentication Error"),
-    APPERROR("Application Error");
+    APPERROR("Application Error"),
+    ADMINERROR("Admin Subsystem Error");
+    
 
     /**
      * The associated error code (string) to the enum key.

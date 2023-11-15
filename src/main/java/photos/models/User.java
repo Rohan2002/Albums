@@ -28,7 +28,7 @@ public class User implements Serializable {
         }
         this.userDirectory = userDirFileObj;
     }
-
+    
     public String getUsername() {
         return this.username;
     }
@@ -51,11 +51,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                " username='" + getUsername() + "'" +
-                ", password='" + getPassword() + "'" +
-                ", userDirectory='" + getUserDirectory() + "'" +
-                "}";
+        return getUsername();
     }
 
     @Override
@@ -64,7 +60,7 @@ public class User implements Serializable {
             return false;
         }
         User cObject = (User) object;
-        return this.username.equals(cObject.username) && this.password.equals(cObject.password);
+        return this.username.equalsIgnoreCase(cObject.username) && this.password.equals(cObject.password);
     }
 
 }
