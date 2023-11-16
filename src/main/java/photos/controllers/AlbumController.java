@@ -262,6 +262,12 @@ public class AlbumController
         this.albumListView.setItems(items);
     }
 
+    @FXML
+    private void select(ActionEvent event)
+    {
+        //nothing
+    }
+
     /**
      * Init user list for app
      */

@@ -2,3 +2,4 @@ lib/
 .vscode
 data/*
 !data/stock
+launch.json
