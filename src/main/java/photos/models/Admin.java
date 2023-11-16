@@ -19,20 +19,20 @@ import java.util.ArrayList;
 
 public class Admin implements Serializable
 {
-    /**
-	 * Default Serial Number
-	 */
-    private static final long serialVersionUID = 1L;
+    // /**
+	//  * Default Serial Number
+	//  */
+    // private static final long serialVersionUID = 1L;
 
-    /**
-	 * Store Directory
-	 */
-	public static final String storeDir = "dat";
+    // /**
+	//  * Store Directory
+	//  */
+	// public static final String storeDir = "dat";
 
-    /**
-	 * Store File
-	 */
-	public static final String storeFile = "photos.dat";
+    // /**
+	//  * Store File
+	//  */
+	// public static final String storeFile = "photos.dat";
 
     /**
 	 * List of Users on platform
@@ -63,28 +63,28 @@ public class Admin implements Serializable
         this.users = users;
     }
 
-    /**
-	 * Writes to the data file
-	 * @throws IOException
-	 */
-    public static void write(User user) throws IOException 
-    {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
-		oos.writeObject(user);
-		oos.close();
-	}
+    // /**
+	//  * Writes to the data file
+	//  * @throws IOException
+	//  */
+    // public static void write(User user) throws IOException 
+    // {
+	// 	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
+	// 	oos.writeObject(user);
+	// 	oos.close();
+	// }
 
-    /**
-	 * reads in the data file
-	 * @return adminListOfUsers
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-    public static Admin read() throws IOException, ClassNotFoundException
-    {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
-		Admin adminListOfUsers = (Admin)ois.readObject(); 
-        ois.close();
-        return adminListOfUsers;
-	} 
+    // /**
+	//  * reads in the data file
+	//  * @return adminListOfUsers
+	//  * @throws IOException
+	//  * @throws ClassNotFoundException
+	//  */
+    // public static Admin read() throws IOException, ClassNotFoundException
+    // {
+	// 	ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
+	// 	Admin adminListOfUsers = (Admin)ois.readObject(); 
+    //     ois.close();
+    //     return adminListOfUsers;
+	// } 
 }

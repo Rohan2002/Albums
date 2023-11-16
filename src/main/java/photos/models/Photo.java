@@ -18,20 +18,20 @@ import java.util.*;
 
 public class Photo implements Serializable
 {
-    /**
-	 * Default Serial Number
-	 */
-    private static final long serialVersionUID = 1L;
+    // /**
+	//  * Default Serial Number
+	//  */
+    // private static final long serialVersionUID = 1L;
 
-    /**
-	 * Store Directory
-	 */
-	public static final String storeDir = "dat";
+    // /**
+	//  * Store Directory
+	//  */
+	// public static final String storeDir = "dat";
 
-    /**
-	 * Store File
-	 */
-	public static final String storeFile = "photos.dat";
+    // /**
+	//  * Store File
+	//  */
+	// public static final String storeFile = "photos.dat";
 
     /**
 	 * Photo reference

@@ -111,5 +111,4 @@ public class User implements Serializable {
         User cObject = (User) object;
         return this.username.equalsIgnoreCase(cObject.username) && this.password.equals(cObject.password);
     }
-
 }
