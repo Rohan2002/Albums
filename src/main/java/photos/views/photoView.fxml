@@ -11,7 +11,8 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="main.java.photos.controllers.PhotoController">
    <children>
       <Button fx:id="nextPictureButton" layoutX="427.0" layoutY="339.0" mnemonicParsing="false" text="Next" />
       <Button fx:id="previousPictureButton" layoutX="110.0" layoutY="339.0" mnemonicParsing="false" text="Previous" />

@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.ArrayList;
 
 /**
  * @author Saman Sathenjeri
@@ -84,6 +83,22 @@ public class Album implements Serializable
     public int getNumOfPhotosInAlbum()
     {
         return this.photos.size();
+    }
+
+    /**
+	 * Getter for album name
+     * @return albumName
+	 */
+    public String getAlbumName() {
+        return this.albumName;
+    }
+
+    /**
+	 * Setter for albumName
+     * @param albumName
+	 */
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
     }
 
     // /**

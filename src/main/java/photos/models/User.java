@@ -18,6 +18,7 @@ import main.java.photos.utils.Tools;
 
 public class User implements Serializable {
 
+    //add jdoc comments here
     private String username;
     private String password;
     private File userDirectory;
@@ -59,7 +60,8 @@ public class User implements Serializable {
     }
 
     /**
-     * Username getter function
+     * Username setter function
+     * 
      * @return the username of the user
      */
     public void setUsername(String username) {
@@ -96,6 +98,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return getUsername();
+    }
+
+    /**
+	 * Finds duplicate Array Names
+     * @param album
+     * @param albumName
+	 */
+    public boolean duplicateAlbumName(String albumName) {
+        for(int y = 0; y<albums.size(); y++) {
+            if(albums.get(y) != null && albums.get(y).getAlbumName().equals(albumName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
