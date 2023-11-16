@@ -247,7 +247,7 @@ public class AlbumController
         });
         albumChosenName.setText(albumChosen.getAlbumName());
         albumNumOfPhotos.setText(Integer.toString(albumChosen.getNumOfPhotosInAlbum()));
-        //albumDateRange.setText(daterange)
+        albumDateRange.setText(albumChosen.getAlbumDateRange());
         return albumChosen;
     }
 

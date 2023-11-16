@@ -101,6 +101,60 @@ public class Album implements Serializable
         this.albumName = albumName;
     }
 
+    /**
+	 * Helper to get min and max dates in an album
+     * @return dates
+	 */
+    public String getAlbumDateRange()
+    {
+        return getMinDate() + getMaxDate();
+    }
+
+    /**
+	 * Helper to get min date in an album
+     * @return date
+	 */
+    public String getMinDate()
+    {
+        Date date = photos.get(0).date;
+        for(int i = 1; i < photos.size(); i++)
+        {
+            if (photos.get(i).date.before(date))
+            {
+                date = photos.get(i).date;
+            }
+        }
+        return toString(date);
+    }
+
+    /**
+	 * Helper to get min and max dates in an album
+     * @return date
+	 */
+    public String getMaxDate()
+    {
+        Date date = photos.get(0).date;
+        for(int i = 1; i < photos.size(); i++)
+        {
+            if (photos.get(i).date.after(date))
+            {
+                date = photos.get(i).date;
+            }
+        }
+        return toString(date);
+    }
+
+    /**
+	 * Override of toString for dates
+     * @return date
+	 */
+    private String toString(Date date) 
+    {
+        String pattern = "MM/dd/yyyy";
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
+        return df.format(date);
+    }
+
     // /**
 	//  * Writes to the data file
 	//  * @throws IOException
