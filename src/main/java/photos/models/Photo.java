@@ -66,7 +66,7 @@ public class Photo implements Serializable
     /**
 	 * Constructor
 	 */
-    public Photo (File photoFile, String photoName) 
+    public Photo (User photoUser, File photoFile, String photoName) 
     {
 		if (photoFile != null) 
         {
@@ -143,28 +143,28 @@ public class Photo implements Serializable
 		this.photoName = photoName;
 	}
 
-    /**
-	 * Writes to the data file
-	 * @throws IOException
-	 */
-    public static void write(User user) throws IOException 
-    {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
-		oos.writeObject(user);
-		oos.close();
-	}
+    // /**
+	//  * Writes to the data file
+	//  * @throws IOException
+	//  */
+    // public static void write(User user) throws IOException 
+    // {
+	// 	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
+	// 	oos.writeObject(user);
+	// 	oos.close();
+	// }
 
-    /**
-	 * reads in the data file
-	 * @return adminListOfUsers
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-    public static Admin read() throws IOException, ClassNotFoundException
-    {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
-		Admin adminListOfUsers = (Admin)ois.readObject(); 
-        ois.close();
-        return adminListOfUsers;
-	} 
+    // /**
+	//  * reads in the data file
+	//  * @return adminListOfUsers
+	//  * @throws IOException
+	//  * @throws ClassNotFoundException
+	//  */
+    // public static Admin read() throws IOException, ClassNotFoundException
+    // {
+	// 	ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
+	// 	Admin adminListOfUsers = (Admin)ois.readObject(); 
+    //     ois.close();
+    //     return adminListOfUsers;
+	// } 
 }

@@ -17,8 +17,8 @@
          </font>
       </Text>
       <Button fx:id="logOutButton" layoutX="524.0" layoutY="24.0" mnemonicParsing="false" text="Log Out" />
-      <Button fx:id="createUserButton" onAction="#createUser" layoutX="36.0" layoutY="215.0" mnemonicParsing="false" text="Create User" />
-      <Button fx:id="deleteUserButton" onAction="#deleteUser" layoutX="402.0" layoutY="176.0" mnemonicParsing="false" text="Delete User" />
+      <Button fx:id="createUserButton" layoutX="36.0" layoutY="215.0" mnemonicParsing="false" onAction="#loginAction" text="Create User" />
+      <Button fx:id="deleteUserButton" layoutX="402.0" layoutY="176.0" mnemonicParsing="false" text="Delete User" />
       <TextField fx:id="deleteUsername" layoutX="402.0" layoutY="137.0" prefHeight="26.0" prefWidth="166.0" promptText="Username" />
       <TextField fx:id="createUsername" layoutX="36.0" layoutY="137.0" prefHeight="26.0" prefWidth="166.0" promptText="Username" />
       <PasswordField fx:id="createPassword" layoutX="36.0" layoutY="176.0" prefHeight="25.0" prefWidth="166.0" promptText="Password" />

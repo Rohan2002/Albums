@@ -118,6 +118,27 @@ public class UserList {
         return removedUser;
     }
 
+    /*
+     * Update user list on disk with new user object
+     *  
+     */
+    public boolean updateUser(User updatedUser){
+        boolean updatedUserStatus = false;
+        ArrayList<User> userList = fetchUserList();
+        Iterator<User> iterator = userList.iterator();
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+            // found the exisitng user in the user list.
+            if (updatedUser.getUsername().equalsIgnoreCase(user.getUsername())) {
+                iterator.remove();
+                updatedUserStatus = userList.add(updatedUser);
+                break;
+            }
+        }
+        return updatedUserStatus;
+    }
+
+
     /**
      * Read user list from disk.
      * Note IOException is fail-safe meaning IF the user list does not exist on the disk then a user list is created
