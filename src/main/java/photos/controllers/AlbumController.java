@@ -8,6 +8,7 @@
 
 package main.java.photos.controllers;
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,8 +29,11 @@ import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class AlbumController 
+import javafx.fxml.Initializable;
+
+public class AlbumController implements Initializable
 {
     /**
      * Data structure to store the userList.
@@ -80,19 +84,19 @@ public class AlbumController
      * Textfield to show the album that is chosen by user
      */
     @FXML
-    private TextField albumChosenName;
+    private TextField albumChosenTextBox;
 
     /**
      * Textfield to show the number of photos in the album that is chosen by user
      */
     @FXML
-    private TextField albumNumOfPhotos;
+    private TextField numOfPhotosOnAlbumTextBox;
 
     /**
      * Textfield to show the date range of the album that is chosen by user
      */
     @FXML
-    private TextField albumDateRange;
+    private TextField dateRangesTextBox;
 
     /**
      * Textfield to create a new album
@@ -110,7 +114,7 @@ public class AlbumController
      * albumListView is a container for the list of users.
      */
     @FXML
-    private ListView<Album> albumListView;
+    private ListView<Album> albumList;
 
     @FXML
     private void logOut() {
@@ -129,7 +133,7 @@ public class AlbumController
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
                     "Please fill in the new Album Name.");
         }
-
+        
         if (!user.duplicateAlbumName(albumName))
         {
             Album newAlbum = new Album(albumName);
@@ -160,7 +164,8 @@ public class AlbumController
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No Album Chosen",
                     "Please click on an album to delete.");
         }
-
+        albumChosen = null;
+        clearFields();
         displayList(user.getAlbumsList());
     }
 
@@ -237,17 +242,17 @@ public class AlbumController
      */
     private Album getLiveAlbum(ActionEvent event)
     {
-        albumListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Album>() {
+        albumList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Album>() {
 
             @Override
             public void changed(ObservableValue<? extends Album> arg0, Album arg1, Album arg2) {
-                albumChosen = albumListView.getSelectionModel().getSelectedItem();
+                albumChosen = albumList.getSelectionModel().getSelectedItem();
             }
             
         });
-        albumChosenName.setText(albumChosen.getAlbumName());
-        albumNumOfPhotos.setText(Integer.toString(albumChosen.getNumOfPhotosInAlbum()));
-        albumDateRange.setText(albumChosen.getAlbumDateRange());
+        albumChosenTextBox.setText(albumChosen.getAlbumName());
+        numOfPhotosOnAlbumTextBox.setText(Integer.toString(albumChosen.getNumOfPhotosInAlbum()));
+        dateRangesTextBox.setText(albumChosen.getAlbumDateRange());
         return albumChosen;
     }
 
@@ -257,15 +262,24 @@ public class AlbumController
      */
     private void displayList(ArrayList<Album> albums)
     {
-        userList.updateUser(user);
         ObservableList<Album> items = FXCollections.observableArrayList(albums);
-        this.albumListView.setItems(items);
+        this.albumList.setItems(items);
+        userList.updateUser(user);
     }
 
-    @FXML
-    private void select(ActionEvent event)
+    // @FXML
+    // private void select(ActionEvent event)
+    // {
+    //     //nothing
+    // }
+
+    /**
+     * Takes in the user object that has logged in and brings in to album controller
+     * @param u
+     */
+    public void setMainUser(User u)
     {
-        //nothing
+        this.user = u;
     }
 
     /**
@@ -281,5 +295,32 @@ public class AlbumController
             e.printStackTrace();
             ErrorMessage.showError(ErrorCode.ADMINERROR, "Cannot load users", e.getMessage());
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        albumList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Album>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Album> arg0, Album arg1, Album arg2) {
+                albumChosen = albumList.getSelectionModel().getSelectedItem();
+                updateFields();
+            }
+            
+        });
+    }
+
+    private void updateFields()
+    {
+        albumChosenTextBox.setText(albumChosen.getAlbumName());
+        numOfPhotosOnAlbumTextBox.setText(Integer.toString(albumChosen.getNumOfPhotosInAlbum()));
+        dateRangesTextBox.setText(albumChosen.getAlbumDateRange());
+    }
+
+    private void clearFields()
+    {
+        albumChosenTextBox.clear();
+        numOfPhotosOnAlbumTextBox.clear();
+        dateRangesTextBox.clear();
     }
 }

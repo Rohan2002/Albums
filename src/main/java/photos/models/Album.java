@@ -82,6 +82,10 @@ public class Album implements Serializable
 	 */
     public int getNumOfPhotosInAlbum()
     {
+        if (photos == null)
+        {
+            return 0;
+        }
         return this.photos.size();
     }
 
@@ -107,6 +111,10 @@ public class Album implements Serializable
 	 */
     public String getAlbumDateRange()
     {
+        if (photos == null)
+        {
+            return "N/A";
+        }
         return getMinDate() + getMaxDate();
     }
 

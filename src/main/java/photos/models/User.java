@@ -115,6 +115,14 @@ public class User implements Serializable {
     }
 
     /**
+     * Will check if album is empty
+     */
+    // public boolean emptyAlbumCheck()
+    // {
+    //     if()
+    // }
+
+    /**
      * Equals comparison of the User object.
      * Equality of strings is based on username and password fields only.
      * Note for username, the case of the string does not matter, but for password it does.

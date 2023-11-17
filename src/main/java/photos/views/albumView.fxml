@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="main.java.photos.controllers.AlbumController">
+   >
    <children>
       <Text layoutX="262.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Albums">
          <font>
@@ -17,7 +17,7 @@
          </font>
       </Text>
       <Button fx:id="logOutButton" layoutX="515.0" layoutY="25.0" mnemonicParsing="false" text="Log Out" />
-      <ListView fx:id="albumList" layoutX="200.0" layoutY="100.0" onMouseClicked="#select" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="albumList" layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
       <Button fx:id="createAlbum" layoutX="42.0" layoutY="138.0" mnemonicParsing="false" onAction="#createAlbumAction" text="Create New Album" />
       <Button fx:id="deleteAlbum" layoutX="57.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteAlbumAction" text="Delete Album" />
       <Button fx:id="renameAlbum" layoutX="52.0" layoutY="288.0" mnemonicParsing="false" onAction="#renameAlbumAction" text="Rename Album" />

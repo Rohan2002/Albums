@@ -47,6 +47,8 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    public AlbumController albumController = new AlbumController();
+
     /**
      * Initialize user list with 2 special usernames called stock and admin
      */
@@ -99,9 +101,14 @@ public class LoginController {
     /**
      * After successful auth for non-admin, display the non-admin subsystem page which is the album logic.
      */
-    private void albumView() {
+    private void albumView(User u) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/albumView.fxml"));
+            
+            AlbumController albumController = new AlbumController();
+            albumController.setMainUser(u);
+            loader.setController(albumController);
+
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -137,7 +144,7 @@ public class LoginController {
             if (logginInUser.getUsername().equals("admin")) {
                 adminView();
             } else {
-                albumView();
+                albumView(logginInUser);
             }
         } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Invalid credentials!",
