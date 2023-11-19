@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
-public class AlbumController implements Initializable
+public class AlbumController extends ParentController implements Initializable
 {
     /**
      * Data structure to store the userList.
@@ -44,12 +44,6 @@ public class AlbumController implements Initializable
      * The user that is viewing their albums
      */
     private User user;
-
-    /**
-     * The button to logout user.
-     */
-    @FXML
-    private Button logOut;
 
     /**
      * The button to create an Album
@@ -116,11 +110,6 @@ public class AlbumController implements Initializable
     @FXML
     private ListView<Album> albumList;
 
-    @FXML
-    private void logOut() {
-        // may need to make this an interface/inherited class (used in multiple views)
-    }
-
     /**
      * Create album with new album name
      * @param event
@@ -131,18 +120,20 @@ public class AlbumController implements Initializable
         String albumName = createAlbumTextBox.getText();
         if (createAlbumTextBox.getLength() < 1) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
-                    "Please fill in the new Album Name.");
-        }
-        
-        if (!user.duplicateAlbumName(albumName))
-        {
-            Album newAlbum = new Album(albumName);
-            user.addAlbum(newAlbum);
+                    "Please fill in a new Album Name.");
         }
         else
         {
-            ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
-                    "Please fill in a different Album Name.");
+            if (!user.duplicateAlbumName(albumName))
+            {
+                Album newAlbum = new Album(albumName);
+                user.addAlbum(newAlbum);
+            }
+            else
+            {
+                ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
+                        "Please fill in a different Album Name.");
+            }
         }
 
         displayList(user.getAlbumsList());
@@ -213,10 +204,24 @@ public class AlbumController implements Initializable
         if (albumChosen != null)
         {
             try {
+                // FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/photoView.fxml"));
+                // Parent root = loader.load();
+
+                // Stage stage = new Stage();
+                // stage.setScene(new Scene(root));
+                // stage.show();
+
+                // // Close the current login window if needed
+                // ((Stage) openAlbum.getScene().getWindow()).close();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/photoView.fxml"));
+            
+                PhotoController photoController = new PhotoController();
+                Stage stage = new Stage();
+                photoController.setMainAlbum(user, albumChosen, userList, stage);
+                loader.setController(photoController);
+
                 Parent root = loader.load();
 
-                Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
 
@@ -260,45 +265,43 @@ public class AlbumController implements Initializable
      * Routine to update the albums view after add/delete/rename.
      * @param album
      */
-    private void displayList(ArrayList<Album> albums)
+    public void displayList(ArrayList<Album> albums)
     {
         ObservableList<Album> items = FXCollections.observableArrayList(albums);
         this.albumList.setItems(items);
         userList.updateUser(user);
     }
 
-    // @FXML
-    // private void select(ActionEvent event)
-    // {
-    //     //nothing
-    // }
-
     /**
      * Takes in the user object that has logged in and brings in to album controller
      * @param u
      */
-    public void setMainUser(User u)
+    public void setMainUser(User user, UserList userlist)
     {
-        this.user = u;
+        this.user = user;
+        this.userList = userlist;
+        //displayList(user.getAlbumsList());
     }
 
-    /**
-     * Init user list for app
-     */
-    @FXML
-    private void initialize() {
-        try {
-            UserList userList = new UserList();
-            this.userList = userList;
+    // /**
+    //  * Init user list for app
+    //  */
+    // @FXML
+    // private void initialize() {
+    //     try {
+    //         UserList userList = new UserList();
+    //         this.userList = userList;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            ErrorMessage.showError(ErrorCode.ADMINERROR, "Cannot load users", e.getMessage());
-        }
-    }
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //         ErrorMessage.showError(ErrorCode.ADMINERROR, "Cannot load users", e.getMessage());
+    //     }
+    // }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        albumChosen = null;
+        displayList(user.getAlbumsList());
         albumList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Album>() {
 
             @Override

@@ -106,7 +106,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/albumView.fxml"));
             
             AlbumController albumController = new AlbumController();
-            albumController.setMainUser(u);
+            albumController.setMainUser(u, userList);
             loader.setController(albumController);
 
             Parent root = loader.load();

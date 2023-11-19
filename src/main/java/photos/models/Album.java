@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import main.java.photos.utils.ErrorCode;
+import main.java.photos.utils.ErrorMessage;
+
 /**
  * @author Saman Sathenjeri
  * @author Rohan Deshpande
@@ -41,7 +44,7 @@ public class Album implements Serializable
     /**
 	 * List of Photos in an album
 	 */
-    public ArrayList<Photo> photos;
+    public ArrayList<Photo> photos = new ArrayList<Photo>();
 
     /**
 	 * Constructor
@@ -74,6 +77,26 @@ public class Album implements Serializable
 	 */
     public void setPhotosInAlbum(ArrayList<Photo> photos) {
         this.photos = photos;
+    }
+
+    /**
+	 * Helper to add photo to album
+     * @param photos
+	 */
+    public void addPhoto(Photo photo) {
+        this.getPhotosInAlbum().add(photo);
+    }
+
+    /**
+	 * Helper to delete a photo to album
+     * @param photos
+	 */
+    public void deletePhoto(Photo photo) 
+    {   
+        if (this.getPhotosInAlbum().contains(photo))
+        {
+            this.getPhotosInAlbum().remove(photo);
+        }
     }
 
     /**
@@ -115,7 +138,7 @@ public class Album implements Serializable
         {
             return "N/A";
         }
-        return getMinDate() + getMaxDate();
+        return getMinDate() + " - " + getMaxDate();
     }
 
     /**
@@ -161,6 +184,33 @@ public class Album implements Serializable
         String pattern = "MM/dd/yyyy";
         SimpleDateFormat df = new SimpleDateFormat(pattern);
         return df.format(date);
+    }
+
+    /**
+     * Checks if there are duplicate photos with the same filepath
+     * @param photo
+     * @return
+     */
+    public boolean duplicatePhoto (Photo photo)
+    {
+        for(int y = 0; y < photos.size(); y++) {
+            if(photos.get(y) != null && photos.get(y).getFile().compareTo(photo.getFile()) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getIndexOfPhoto(Photo photo)
+    {
+        for (int i = 0; i < this.getNumOfPhotosInAlbum(); i++)
+        {
+            if (this.getPhotosInAlbum().get(i).equals(photo))
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // /**

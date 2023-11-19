@@ -142,12 +142,14 @@ public class User implements Serializable {
      * @param album
      */
     public void deleteAlbum(Album album) {
-        albums.remove(album);
+        if (this.getAlbumsList().contains(album))
+        {
+            this.albums.remove(album);
+        }
     }
 
     /**
 	 * Finds duplicate Array Names
-     * @param album
      * @param albumName
 	 */
     public boolean duplicateAlbumName(String albumName) {

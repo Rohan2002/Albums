@@ -1,60 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="main.java.photos.controllers.PhotoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+   prefHeight="636.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
+   xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="nextPictureButton" layoutX="427.0" layoutY="339.0" mnemonicParsing="false" text="Next" />
-      <Button fx:id="previousPictureButton" layoutX="110.0" layoutY="339.0" mnemonicParsing="false" text="Previous" />
-      <ImageView fx:id="photoViewBox" fitHeight="195.0" fitWidth="191.0" layoutX="205.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="changeDateButton" layoutX="14.0" layoutY="601.0" mnemonicParsing="false" text="Change Date" />
-      <Button fx:id="searchDateButton" layoutX="167.0" layoutY="601.0" mnemonicParsing="false" text="Search Date" />
-      <ScrollPane hbarPolicy="ALWAYS" hmax="10.0" layoutX="20.0" layoutY="54.0" prefHeight="94.0" prefWidth="561.0" vbarPolicy="NEVER">
-        <content>
-          <AnchorPane fx:id="slideshowContainer" minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="560.0">
-               <children>
-                  <ImageView fx:id="albumThumbnail1" fitHeight="77.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="albumThumbnail2" fitHeight="77.0" fitWidth="80.0" layoutX="80.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="albumThumbnail3" fitHeight="77.0" fitWidth="80.0" layoutX="160.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="albumThumbnail4" fitHeight="77.0" fitWidth="80.0" layoutX="240.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="albumThumbnail5" fitHeight="77.0" fitWidth="80.0" layoutX="320.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="albumThumbnail6" fitHeight="77.0" fitWidth="80.0" layoutX="400.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="albumThumbnail7" fitHeight="77.0" fitWidth="80.0" layoutX="480.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-      <TextField fx:id="addOrRemoveOrSearchTagTextBox" promptText="name: Adam" layoutX="347.0" layoutY="566.0" prefHeight="26.0" prefWidth="239.0" />
-      <Button fx:id="addTagButton" layoutX="347.0" layoutY="601.0" mnemonicParsing="false" text="Add Tag" />
-      <Button fx:id="searchTagButton" layoutX="506.0" layoutY="601.0" mnemonicParsing="false" text="Search Tag" />
-      <Button fx:id="removeTagButton" layoutX="415.0" layoutY="601.0" mnemonicParsing="false" text="Remove Tag" />
-      <TextField fx:id="changeOrSearchDateTextBox" promptText="1/1/2020" layoutX="14.0" layoutY="566.0" prefHeight="26.0" prefWidth="239.0" />
-      <Label layoutX="269.0" layoutY="225.0" prefHeight="29.0" prefWidth="61.0" text="Photo" textAlignment="CENTER">
+      <Button fx:id="nextPictureButton" layoutX="427.0" layoutY="346.0" mnemonicParsing="false"
+         text="Next" />
+      <Button fx:id="previousPictureButton" layoutX="110.0" layoutY="346.0" mnemonicParsing="false"
+         text="Previous" />
+      <ImageView fx:id="photoViewBox" fitHeight="150.0" fitWidth="150.0" layoutX="225.0"
+         layoutY="293.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="searchDateButton" layoutX="91.0" layoutY="601.0" mnemonicParsing="false"
+         text="Search Date" />
+      <TextField fx:id="addOrRemoveOrSearchTagTextBox" layoutX="347.0" layoutY="566.0"
+         prefHeight="26.0" prefWidth="239.0" promptText="name: Adam" />
+      <Button fx:id="addTagButton" layoutX="347.0" layoutY="601.0" mnemonicParsing="false"
+         text="Add Tag" />
+      <Button fx:id="searchTagButton" layoutX="506.0" layoutY="601.0" mnemonicParsing="false"
+         text="Search Tag" />
+      <Button fx:id="removeTagButton" layoutX="415.0" layoutY="601.0" mnemonicParsing="false"
+         text="Remove Tag" />
+      <TextField fx:id="changeOrSearchDateTextBox" layoutX="14.0" layoutY="566.0" prefHeight="26.0"
+         prefWidth="239.0" promptText="1/1/2020" />
+      <Label layoutX="270.0" layoutY="257.0" prefHeight="29.0" prefWidth="60.0" text="Photo"
+         textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="backToAlbumsListButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Back to Albums List" />
-      <Button fx:id="logOutButton" layoutX="517.0" layoutY="20.0" mnemonicParsing="false" text="Log Out" />
-      <Button fx:id="addPhotoButton" layoutX="26.0" layoutY="159.0" mnemonicParsing="false" text="Add a Photo" />
-      <Button fx:id="deletePhotoButton" layoutX="482.0" layoutY="159.0" mnemonicParsing="false" text="Delete a Photo" />
-      <TextField fx:id="addOrChangeCaptionTextBox" promptText="'This was a great trip'"  layoutX="131.0" layoutY="520.0" prefHeight="26.0" prefWidth="239.0" />
-      <Button fx:id="addOrChangeCaptionButton" layoutX="376.0" layoutY="520.0" mnemonicParsing="false" text="Add or Change Caption" />
-      <Separator fx:id="seperator2" layoutX="-1.0" layoutY="503.0" prefHeight="5.0" prefWidth="600.0" />
-      <Separator fx:id="seperator1" layoutY="213.0" prefHeight="5.0" prefWidth="600.0" />
-      <Button fx:id="copyPhotoToAlbumButton" layoutX="154.0" layoutY="159.0" mnemonicParsing="false" text="Copy Photo to Album" />
-      <Button fx:id="movePhotoToAlbumButton" layoutX="310.0" layoutY="159.0" mnemonicParsing="false" text="Move Photo to Album" />
-      <TextField fx:id="captionTextBox" layoutX="75.0" layoutY="465.0" prefHeight="26.0" prefWidth="222.0" />
+      <Button fx:id="backToAlbumsListButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false"
+         onAction="#backToAlbumsList" text="Back to Albums List" />
+      <Button fx:id="logOutButton" layoutX="517.0" layoutY="20.0" mnemonicParsing="false"
+         onAction="#logOut" text="Log Out" />
+      <Button fx:id="addPhotoButton" layoutX="26.0" layoutY="219.0" mnemonicParsing="false"
+         onAction="#addPhoto" text="Add a Photo" />
+      <Button fx:id="deletePhotoButton" layoutX="482.0" layoutY="219.0" mnemonicParsing="false"
+         onAction="#deletePhoto" text="Delete a Photo" />
+      <TextField fx:id="addOrChangeCaptionTextBox" layoutX="131.0" layoutY="520.0" prefHeight="26.0"
+         prefWidth="239.0" promptText="'This was a great trip'" />
+      <Button fx:id="addOrChangeCaptionButton" layoutX="376.0" layoutY="520.0"
+         mnemonicParsing="false" onAction="#addOrChangeCaption" text="Add or Change Caption" />
+      <Separator fx:id="seperator2" layoutX="-1.0" layoutY="503.0" prefHeight="5.0"
+         prefWidth="600.0" />
+      <Separator fx:id="seperator1" layoutY="201.0" prefHeight="5.0" prefWidth="600.0" />
+      <Button fx:id="copyPhotoToAlbumButton" layoutX="154.0" layoutY="219.0" mnemonicParsing="false"
+         text="Copy Photo to Album" />
+      <Button fx:id="movePhotoToAlbumButton" layoutX="310.0" layoutY="219.0" mnemonicParsing="false"
+         text="Move Photo to Album" />
+      <TextField fx:id="captionTextBox" layoutX="75.0" layoutY="465.0" prefHeight="26.0"
+         prefWidth="222.0" />
       <Text layoutX="20.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption">
          <font>
             <Font size="14.0" />
@@ -65,6 +72,116 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="tagTextBox" layoutX="389.0" layoutY="464.0" prefHeight="26.0" prefWidth="191.0" />
+      <TextField fx:id="tagTextBox" layoutX="389.0" layoutY="464.0" prefHeight="26.0"
+         prefWidth="191.0" />
+      <GridPane fx:id="albumGridContainer" layoutX="20.0" layoutY="55.0" prefHeight="142.0"
+         prefWidth="558.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="thumbnail1" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail2" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail3" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail4" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail5" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail6" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail7" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="6">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail8" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail9" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail10" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail11" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail12" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail13" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="thumbnail14" fitHeight="64.0" fitWidth="70.0" pickOnBounds="true"
+               preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+         </children>
+      </GridPane>
+      <TextField fx:id="dateTextBox" layoutX="482.0" layoutY="424.0" prefHeight="26.0"
+         prefWidth="97.0" />
+      <Text layoutX="445.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

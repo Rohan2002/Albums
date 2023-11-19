@@ -22,7 +22,8 @@ import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 
-public class AdminController {
+public class AdminController extends ParentController
+{
     /**
      * Data structure to store the userList.
      */
@@ -59,21 +60,10 @@ public class AdminController {
     private Button deleteUserButton;
 
     /**
-     * The button to logout user.
-     */
-    @FXML
-    private Button logOutButton;
-
-    /**
      * userListView is a container for the list of users.
      */
     @FXML
     private ListView<User> userListView;
-
-    @FXML
-    private void logOut() {
-        // may need to make this an interface/inherited class (used in multiple views)
-    }
 
     /**
      * Init user list for app and app view.
@@ -105,10 +95,12 @@ public class AdminController {
         if (newUsername.length() < 1 || newPassword.length() < 1) {
             ErrorMessage.showError(ErrorCode.ADMINERROR, "Incomplete username or password field!",
                     "Enter a valid username and password!");
+            return;
         }
         if (!this.userList.addUser(new User(newUsername, newPassword))) {
             ErrorMessage.showError(ErrorCode.ADMINERROR, "Could not add user with username " + newUsername,
                     "Username exists in our database, choose a unique one!");
+            return;
         }
         updateListView(this.userList);
     }

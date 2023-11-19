@@ -66,11 +66,11 @@ public class Photo implements Serializable
     /**
 	 * Constructor
 	 */
-    public Photo (User photoUser, File photoFile, String photoName) 
+    public Photo (User photoUser, File photoFile) 
     {
-		if (photoFile != null) 
+		if (photoFile == null) 
         {
-            this.photoFile = new File(photoName);
+            //this.photoFile = new File();
         }
 		else 
         {
@@ -113,7 +113,7 @@ public class Photo implements Serializable
 	 * Setter for tags
      * @param tags
 	 */
-    public void setCaption(ArrayList<Tag> tags)
+    public void setTags(ArrayList<Tag> tags)
     {
         this.tags = tags;
     }
@@ -141,6 +141,22 @@ public class Photo implements Serializable
 	 */
 	public void setName(String photoName) {
 		this.photoName = photoName;
+	}
+
+	/**
+	 * Getter for Photo File
+	 * @return file of Photo
+	 */
+	public File getFile() {
+		return photoFile;
+	}
+
+    /**
+	 * Setter for Photo Name
+	 * @return name of photo
+	 */
+	public void setFile(File file) {
+		this.photoFile = file;
 	}
 
     // /**
