@@ -2,13 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+   >
    <children>
       <Text layoutX="262.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Albums">
          <font>
@@ -17,15 +18,19 @@
       </Text>
       <Button fx:id="logOutButton" layoutX="515.0" layoutY="25.0" mnemonicParsing="false" text="Log Out" />
       <ListView fx:id="albumList" layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="createAlbum" layoutX="62.0" layoutY="100.0" mnemonicParsing="false" text="Create Album" />
-      <Button fx:id="deleteAlbum" layoutX="63.0" layoutY="187.0" mnemonicParsing="false" text="Delete Album" />
-      <Button fx:id="renameAlbum" layoutX="58.0" layoutY="274.0" mnemonicParsing="false" text="Rename Album" />
-      <Button fx:id="openAlbum" layoutX="257.0" layoutY="316.0" mnemonicParsing="false" text="Open Album" />
+      <Button fx:id="createAlbum" layoutX="42.0" layoutY="138.0" mnemonicParsing="false" onAction="#createAlbumAction" text="Create New Album" />
+      <Button fx:id="deleteAlbum" layoutX="57.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteAlbumAction" text="Delete Album" />
+      <Button fx:id="renameAlbum" layoutX="52.0" layoutY="288.0" mnemonicParsing="false" onAction="#renameAlbumAction" text="Rename Album" />
+      <Button fx:id="openAlbum" layoutX="257.0" layoutY="316.0" mnemonicParsing="false" onAction="#openAlbumAction" text="Open Album" />
       <TextField fx:id="albumChosenTextBox" layoutX="425.0" layoutY="123.0" />
       <Text layoutX="464.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Chosen" />
-      <Text layoutX="446.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Photos on Album" />
-      <TextField fx:id="numOfPhotosOnAlbumTextBox" layoutX="426.0" layoutY="193.0" />
+      <Text layoutX="446.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Photos on Album" />
+      <TextField fx:id="numOfPhotosOnAlbumTextBox" layoutX="426.0" layoutY="198.0" />
       <Text layoutX="471.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Ranges" />
       <TextField fx:id="dateRangesTextBox" layoutX="426.0" layoutY="273.0" />
+      <TextField fx:id="createAlbumTextBox" layoutX="22.0" layoutY="106.0" prefHeight="26.0" prefWidth="160.0" promptText="Create an Album Name" />
+      <Separator layoutX="22.0" layoutY="182.0" prefHeight="3.0" prefWidth="160.0" />
+      <Separator layoutX="22.0" layoutY="242.0" prefHeight="3.0" prefWidth="160.0" />
+      <TextField fx:id="renameAlbumTextBox" layoutX="22.0" layoutY="257.0" promptText="New album name here" />
    </children>
 </AnchorPane>

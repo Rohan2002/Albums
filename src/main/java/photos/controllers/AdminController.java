@@ -24,7 +24,7 @@ import main.java.photos.utils.ErrorMessage;
 
 public class AdminController {
     /**
-     * Data structuure to store the userList.
+     * Data structure to store the userList.
      */
     private UserList userList;
 
