@@ -25,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import main.java.photos.models.Album;
 import main.java.photos.models.Photo;
+import main.java.photos.models.Tag;
 import main.java.photos.models.User;
 import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
@@ -82,7 +83,7 @@ public class PhotoController extends ParentController implements Initializable
      * Text Field to search/remove a tag
      */
     @FXML
-    private TextField addOrRemoveOrSearchTagTextBox;
+    private TextField addOrRemoveTagTextBox;
 
     /**
      * Button to add a tag
@@ -106,7 +107,7 @@ public class PhotoController extends ParentController implements Initializable
      * Text Field to change or search date of a photo
      */
     @FXML
-    private TextField changeOrSearchDateTextBox;
+    private TextField searchDateTextBox;
 
     /**
      * Button to go back to albums list
@@ -327,6 +328,48 @@ public class PhotoController extends ParentController implements Initializable
     }
 
     /**
+     * Function to add a tag to a photo
+     * @param event
+     */
+    @FXML
+    private void addTag(ActionEvent event)
+    {
+        String tagString = addOrRemoveTagTextBox.getText();
+        if (addOrRemoveTagTextBox.getLength() < 1) {
+            ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
+                    "Please fill in a new Tag.");
+        }
+        else
+        {
+            Tag tag = new Tag(tagString);
+            chosenPhoto.addTag(tag);
+        }
+
+        displayAlbum(album);
+    }
+
+    /**
+     * Function to remove a tag to a photo
+     * @param event
+     */
+    @FXML
+    private void removeTag(ActionEvent event)
+    {
+        String tagString = addOrRemoveTagTextBox.getText();
+        if (addOrRemoveTagTextBox.getLength() < 1) {
+            ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
+                    "Please fill in a new Tag.");
+        }
+        else
+        {
+            Tag tag = new Tag(tagString);
+            chosenPhoto.removeTag(chosenPhoto.findTag(tag));
+        }
+
+        displayAlbum(album);
+    }
+
+    /**
      * Will display album thumbnails
      * 
      * **************NEED TO ADD FUNCTIONALITY TO HANDLE WHEN THERE ARE MORE THAN 14 PHOTOS ****************
@@ -365,9 +408,13 @@ public class PhotoController extends ParentController implements Initializable
             
             //Setting image to the image view
             imageView.setImage(image);
-            captionTextBox.setText(photo.getCaption());
-            //tagTextBox.setText(photo.getAllTags());
-            //dateTextBox.setText(photo.getDate());
+
+            if (photo.equals(chosenPhoto))
+            {
+                captionTextBox.setText(photo.getCaption());
+                tagTextBox.setText(photo.setTagsToString());
+                //dateTextBox.setText(photo.getDate());
+            }
         }
         catch (IOException e) 
         {

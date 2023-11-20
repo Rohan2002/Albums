@@ -42,15 +42,73 @@ public class Tag implements Serializable
      */
     String tagData;
 
-    public Tag()
+    /**
+     * Constructor
+     * @param totalTag
+     */
+    public Tag(String totalTag)
     {
-        //no arg constructor
+        String[] arrOfStr = totalTag.split(":", 2);
+        this.tagName = arrOfStr[0];
+        this.tagData = arrOfStr[1];
     }
 
+    /**
+     * Constuctor
+     * @param tagName
+     * @param tagData
+     */
     public Tag(String tagName, String tagData)
     {
         this.tagName = tagName;
         this.tagData = tagData;
+    }
+
+    /**
+     * Getter for Tag Name
+     * @return
+     */
+    public String getTagName()
+    {
+        return this.tagName;
+    }
+
+    /**
+     * Setter for Tag Name
+     * @param tagName
+     * @return
+     */
+    public void setTagName(String tagName)
+    {
+        this.tagName = tagName;
+    }
+
+    /**
+     * Getter for Tag Data
+     * @return
+     */
+    public String getTagData()
+    {
+        return this.tagData;
+    }
+
+    /**
+     * Setter for Tag Data
+     * @param tagData
+     * @return
+     */
+    public void setTagData(String tagData)
+    {
+        this.tagData = tagData;
+    }
+
+    /**
+     * Helper to return tag as string
+     * @return
+     */
+    public String tagAsString()
+    {
+        return this.getTagName() + " : " + this.getTagData();
     }
     
     /**

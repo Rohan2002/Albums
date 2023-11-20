@@ -113,7 +113,7 @@ public class Photo implements Serializable
 	 * Setter for tags
      * @param tags
 	 */
-    public void setTags(ArrayList<Tag> tags)
+    public void setAllTags(ArrayList<Tag> tags)
     {
         this.tags = tags;
     }
@@ -157,6 +157,55 @@ public class Photo implements Serializable
 	 */
 	public void setFile(File file) {
 		this.photoFile = file;
+	}
+
+	/**
+	 * Helper to add tags to a photos tag list
+	 * @param tag
+	 */
+	public void addTag(Tag tag)
+	{
+		this.getAllTags().add(tag);
+	}
+
+	/**
+	 * Helper to remove tags to a photos tag list
+	 * @param tag
+	 */
+	public void removeTag(Tag tag)
+	{
+		this.getAllTags().remove(tag);
+	}
+
+	/**
+	 * Helper to find tag
+	 * @param tag
+	 * @return tag
+	 */
+	public Tag findTag(Tag tag)
+	{
+		for (int i = 0; i < tags.size(); i++)
+		{
+			if (tags.get(i).getTagName().equalsIgnoreCase(tag.getTagName()) && 
+				tags.get(i).getTagData().equalsIgnoreCase(tag.getTagData()))
+			{
+				return tags.get(i);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 */
+	public String setTagsToString()
+	{
+		String totalString = "";
+		for (int i = 0; i < tags.size(); i++)
+		{
+			totalString = totalString + tags.get(i).tagAsString() + ", ";
+		}
+		return totalString;
 	}
 
     // /**
