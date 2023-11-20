@@ -11,6 +11,8 @@
 package main.java.photos.controllers;
 import java.io.IOException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,10 +22,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.java.photos.models.Album;
 import main.java.photos.models.Photo;
@@ -32,6 +37,8 @@ import main.java.photos.models.User;
 import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
+
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,6 +46,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 
 public class PhotoController extends ParentController implements Initializable 
 {
@@ -205,6 +213,11 @@ public class PhotoController extends ParentController implements Initializable
      * to show in album
      */
     public int page = 0;
+
+    /**
+     * The album that you are moving or copying photo to 
+     */
+    public Album photoChangeAlbum;
 
     // public ImageView[] thumbnails = {thumbnail1, thumbnail2, thumbnail3, thumbnail4, 
     //                     thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9, 
@@ -451,10 +464,71 @@ public class PhotoController extends ParentController implements Initializable
     }
 
     /**
+     * Function to move photo from one album to another
+     * @param event
+     */
+    @FXML
+    public void movePhotoToAnotherAlbum(ActionEvent event)
+    {
+        if (chosenPhoto != null)
+        {
+            ChoiceDialog<Album> albumsDialog = new ChoiceDialog<Album>();
+
+            ObservableList<Album> albumsList = albumsDialog.getItems();
+            albumsList.addAll(user.getAlbumsList());
+            albumsList.remove(album);
+            albumsDialog.setHeaderText("Choose an album to move your picture to");
+            albumsDialog.setContentText("Choose your album");
+
+            Optional<Album> result = albumsDialog.showAndWait();
+            if (result.isPresent())
+            {
+                result.get().addPhoto(chosenPhoto);
+                album.deletePhoto(chosenPhoto);
+                chosenPhoto = null;
+            }
+        }
+        else
+        {
+            ErrorMessage.showError(ErrorCode.AUTHERROR, "No photo chosen",
+                    "Please choose a photo to move.");
+        }
+        displayAlbum(album);
+    }
+
+    /**
+     * Function to move photo from one album to another
+     * @param event
+     */
+    @FXML
+    public void copyPhotoToAnotherAlbum(ActionEvent event)
+    {
+        if (chosenPhoto != null)
+        {
+            ChoiceDialog<Album> albumsDialog = new ChoiceDialog<Album>();
+
+            ObservableList<Album> albumsList = albumsDialog.getItems();
+            albumsList.addAll(user.getAlbumsList());
+            albumsList.remove(album);
+            albumsDialog.setHeaderText("Choose an album to copy your picture to");
+            albumsDialog.setContentText("Choose your album");
+
+            Optional<Album> result = albumsDialog.showAndWait();
+            if (result.isPresent())
+            {
+                result.get().addPhoto(chosenPhoto);
+            }
+        }
+        else
+        {
+            ErrorMessage.showError(ErrorCode.AUTHERROR, "No photo chosen",
+                    "Please choose a photo to copy.");
+        }
+        displayAlbum(album);
+    }
+        
+    /**
      * Will display album thumbnails
-     * 
-     * **************NEED TO ADD FUNCTIONALITY TO HANDLE WHEN THERE ARE MORE THAN 14 PHOTOS ****************
-     * 
      * @param album
      */
     private void displayAlbum(Album album)

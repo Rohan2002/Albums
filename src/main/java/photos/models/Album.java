@@ -84,7 +84,15 @@ public class Album implements Serializable
      * @param photos
 	 */
     public void addPhoto(Photo photo) {
-        this.getPhotosInAlbum().add(photo);
+        if (!this.duplicatePhoto(photo))
+        {
+            this.getPhotosInAlbum().add(photo);
+        }
+        else
+        {
+            ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Photo",
+                    "Choose Another Photo");
+        }
     }
 
     /**

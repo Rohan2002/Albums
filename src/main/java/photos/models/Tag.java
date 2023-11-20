@@ -108,7 +108,7 @@ public class Tag implements Serializable
      */
     public String tagAsString()
     {
-        return this.getTagName() + " : " + this.getTagData();
+        return this.getTagName() + ":" + this.getTagData();
     }
     
     /**
