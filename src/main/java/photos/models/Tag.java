@@ -9,8 +9,8 @@
 package main.java.photos.models;
 
 import java.io.Serializable;
-public class Tag implements Serializable
-{
+
+public class Tag implements Serializable {
 
     /**
      * name of tag
@@ -24,10 +24,10 @@ public class Tag implements Serializable
 
     /**
      * Constructor
+     * 
      * @param totalTag
      */
-    public Tag(String totalTag)
-    {
+    public Tag(String totalTag) {
         String[] arrOfStr = totalTag.split(":", 2);
         this.tagName = arrOfStr[0];
         this.tagData = arrOfStr[1];
@@ -35,59 +35,72 @@ public class Tag implements Serializable
 
     /**
      * Constuctor
+     * 
      * @param tagName
      * @param tagData
      */
-    public Tag(String tagName, String tagData)
-    {
+    public Tag(String tagName, String tagData) {
         this.tagName = tagName;
         this.tagData = tagData;
     }
 
     /**
      * Getter for Tag Name
+     * 
      * @return
      */
-    public String getTagName()
-    {
+    public String getTagName() {
         return this.tagName;
     }
 
     /**
      * Setter for Tag Name
+     * 
      * @param tagName
      * @return
      */
-    public void setTagName(String tagName)
-    {
+    public void setTagName(String tagName) {
         this.tagName = tagName;
     }
 
     /**
      * Getter for Tag Data
+     * 
      * @return
      */
-    public String getTagData()
-    {
+    public String getTagData() {
         return this.tagData;
     }
 
     /**
      * Setter for Tag Data
+     * 
      * @param tagData
      * @return
      */
-    public void setTagData(String tagData)
-    {
+    public void setTagData(String tagData) {
         this.tagData = tagData;
     }
 
     /**
      * Helper to return tag as string
+     * 
      * @return
      */
-    public String tagAsString()
-    {
+    public String tagAsString() {
         return this.getTagName() + ":" + this.getTagData();
+    }
+
+    /**
+     * Tag equality function
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Tag)) {
+            return false;
+        }
+        Tag castO = (Tag) o;
+        return castO.getTagData().equalsIgnoreCase(this.getTagData())
+                && castO.getTagName().equalsIgnoreCase(this.getTagName());
     }
 }

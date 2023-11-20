@@ -243,4 +243,75 @@ public class Album implements Serializable {
         }
         return returnAlbum;
     }
+
+    /**
+     * Helper function for the tag query function.
+     * 
+     * @param q
+     * @return Tag if query is a valid tag or NULL.
+     */
+    public Tag parseTag(String q) {
+        String[] tag = q.split("=", 2);
+        if (tag.length != 2) {
+            return null;
+        }
+        return new Tag(tag[0].trim(), tag[1].trim());
+    }
+
+    /**
+     * Search for photos by tag type-value pairs. The following types of tag-based
+     * searches should be implemented:
+     * A single tag-value pair, e.g person=sesh
+     * Conjunctive combination of two tag-value pairs, e.g. person=sesh AND
+     * location=prague
+     * Disjunctive combination of two tag-value pairs, e.g. person=sesh OR
+     * location=prague
+     * For conjunctions and disjunctions, if a tag can have multiple values for a
+     * photo, it can appear on both arms of the conjunction/disjunction, e.g.
+     * person=andre OR person=maya, person=andre AND person=maya
+     * 
+     * @param query
+     * @return Filtered Album
+     */
+    public Album searchByTag(String query) {
+        Album returnAlbum = new Album();
+        if (query.contains("AND") || query.contains("OR")) {
+            String[] queries = query.contains("AND") ? query.split("AND") : query.split("OR");
+            if (queries.length != 2) {
+                return null;
+            }
+            Tag partOne = parseTag(queries[0]);
+            if (partOne == null) {
+                return null;
+            }
+
+            Tag partTwo = parseTag(queries[1]);
+            if (partTwo == null) {
+                return null;
+            }
+
+            for (int i = 0; i < photos.size(); i++) {
+                ArrayList<Tag> tags = photos.get(i).getAllTags();
+                if (query.contains("AND") && (tags.contains(partOne) && tags.contains(partTwo))) {
+                    returnAlbum.addPhoto(photos.get(i));
+                }
+                if (query.contains("OR") && (tags.contains(partOne) || tags.contains(partTwo))) {
+                    returnAlbum.addPhoto(photos.get(i));
+                }
+            }
+        } else {
+            Tag tagQuery = parseTag(query);
+            if (tagQuery == null) {
+                return null;
+            }
+
+            for (int i = 0; i < photos.size(); i++) {
+                ArrayList<Tag> tags = photos.get(i).getAllTags();
+                if (tags.contains(tagQuery)) {
+                    returnAlbum.addPhoto(photos.get(i));
+                }
+            }
+        }
+        return returnAlbum;
+    }
 }

@@ -211,16 +211,6 @@ public class PhotoController extends ParentController implements Initializable {
      */
     public int page = 0;
 
-    /**
-     * The album that carries the photos that match the filter
-     */
-    public Album filterAlbum;
-
-    /**
-     * The album that we filter was put on
-     */
-    public Album showAlbum;
-
     // public ImageView[] thumbnails = {thumbnail1, thumbnail2, thumbnail3,
     // thumbnail4,
     // thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9,
@@ -514,14 +504,38 @@ public class PhotoController extends ParentController implements Initializable {
     private void searchByDateAction(ActionEvent event) {
         String searchDate = searchDateTextBox.getText();
         if (searchDateTextBox.getLength() < 1) {
-            ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
+            ErrorMessage.showError(ErrorCode.APPERROR, "Incomplete field",
                     "Please fill in a new Date.");
-        } else if (stringToDate(searchDate) != null) {
-            filterAlbum = this.getActiveUser().getActiveAlbum().searchByDate(stringToDate(searchDate));
+            return;
         }
-        showAlbum = this.getActiveUser().getActiveAlbum();
-        this.getActiveUser().setActiveAlbum(filterAlbum);
-        displayAlbum(this.getActiveUser().getActiveAlbum());
+        Date stringToDate = stringToDate(searchDate);
+        if (stringToDate != null) {
+            Album dateSearchAlbum = this.getActiveUser().getActiveAlbum().searchByDate(stringToDate);
+            displayAlbum(dateSearchAlbum);
+        }
+
+    }
+
+    /**
+     * Function to search by tag
+     * 
+     * @param event
+     */
+    @FXML
+    private void searchByTagAction(ActionEvent event) {
+        String tagQuery = searchTagTextBox.getText();
+        if (searchTagTextBox.getLength() < 1) {
+            ErrorMessage.showError(ErrorCode.APPERROR, "Incomplete field",
+                    "Please fill in a new Date.");
+            return;
+        }
+        Album tagSearchAlbum = this.getActiveUser().getActiveAlbum().searchByTag(tagQuery);
+        if (tagSearchAlbum == null) {
+            ErrorMessage.showError(ErrorCode.APPERROR, "Invalid Tag Search Query",
+                    "Query format: A=B, A=B OR C=D, A=B AND C=D");
+            return;
+        }
+        displayAlbum(tagSearchAlbum);
     }
 
     /**
@@ -531,7 +545,6 @@ public class PhotoController extends ParentController implements Initializable {
      */
     @FXML
     private void resetFilter(ActionEvent event) {
-        this.getActiveUser().setActiveAlbum(showAlbum);
         searchDateTextBox.clear();
         searchTagTextBox.clear();
         displayAlbum(this.getActiveUser().getActiveAlbum());
@@ -541,18 +554,14 @@ public class PhotoController extends ParentController implements Initializable {
      * **************** NEED TO FIX TO ADD NEW ALBUM NAME
      */
     @FXML
-    private void makeNewSelectionAlbum()
-    {
-        if (!this.getActiveUser().duplicateAlbumName(this.getActiveUser().getActiveAlbum()getAlbumName()))
-        {
+    private void makeNewSelectionAlbum() {
+        if (!this.getActiveUser().duplicateAlbumName(this.getActiveUser().getActiveAlbum().getAlbumName())) {
             this.getActiveUser().addAlbum(this.getActiveUser().getActiveAlbum());
-        }
-        else
-        {
+        } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
                     "Please choose another album name.");
         }
-        
+
     }
 
     /**
@@ -562,17 +571,13 @@ public class PhotoController extends ParentController implements Initializable {
      */
     private void displayAlbum(Album album) {
         for (int i = 0; i < NUM_OF_PHOTO_SLOTS; i++) {
-            if (this.getActiveUser().getActiveAlbum().getNumOfPhotosInAlbum() > i + (page * NUM_OF_PHOTO_SLOTS)) {
+            if (album.getNumOfPhotosInAlbum() > i + (page * NUM_OF_PHOTO_SLOTS)) {
                 if (page > 0) {
-                    displayPhoto(
-                            this.getActiveUser().getActiveAlbum().getPhotosInAlbum()
-                                    .get(i + page * (NUM_OF_PHOTO_SLOTS)),
-                            this.getActiveUser().getActiveAlbum().getPhotosInAlbum()
-                                    .get(i + page * (NUM_OF_PHOTO_SLOTS)).getFile(),
+                    displayPhoto(album.getPhotosInAlbum().get(i + page * (NUM_OF_PHOTO_SLOTS)),
+                            album.getPhotosInAlbum().get(i + page * (NUM_OF_PHOTO_SLOTS)).getFile(),
                             thumbnailGetter(i));
                 } else {
-                    displayPhoto(this.getActiveUser().getActiveAlbum().getPhotosInAlbum().get(i),
-                            this.getActiveUser().getActiveAlbum().getPhotosInAlbum().get(i).getFile(),
+                    displayPhoto(album.getPhotosInAlbum().get(i), album.getPhotosInAlbum().get(i).getFile(),
                             thumbnailGetter(i));
                 }
             } else {

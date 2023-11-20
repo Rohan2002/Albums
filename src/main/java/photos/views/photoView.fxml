@@ -21,7 +21,7 @@
       <Button fx:id="searchDateButton" onAction="#searchByDateAction" layoutX="288.0" layoutY="550.0" mnemonicParsing="false" text="Search Date" />
       <TextField fx:id="addOrRemoveTagTextBox" layoutX="14.0" layoutY="565.0" prefHeight="26.0" prefWidth="239.0" promptText="name: Adam" />
       <Button fx:id="addTagButton" layoutX="14.0" layoutY="596.0" mnemonicParsing="false" onAction="#addTag" text="Add Tag" />
-      <Button fx:id="searchTagButton" layoutX="505.0" layoutY="595.0" mnemonicParsing="false" text="Search Tag" />
+      <Button fx:id="searchTagButton" onAction="#searchByTagAction" layoutX="505.0" layoutY="595.0" mnemonicParsing="false" text="Search Tag" />
       <Button fx:id="removeTagButton" layoutX="168.0" layoutY="596.0" mnemonicParsing="false" onAction="#removeTag" text="Remove Tag" />
       <TextField fx:id="searchDateTextBox" layoutX="286.0" layoutY="520.0" prefHeight="26.0" prefWidth="170.0" promptText="1/1/2020" />
       <Label layoutX="160.0" layoutY="257.0" prefHeight="29.0" prefWidth="60.0" text="Photo" textAlignment="CENTER">
