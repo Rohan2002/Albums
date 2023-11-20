@@ -264,14 +264,9 @@ public class PhotoController extends ParentController implements Initializable {
     @FXML
     private void addPhoto(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-
-        // fileChooser.setInitialDirectory(new File("data"));
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("New JPEG Files", "*.jpg"),
-                new FileChooser.ExtensionFilter("JPEG Files", "*.jpeg"),
-                new FileChooser.ExtensionFilter("PNG Files", "*.png"),
-                new FileChooser.ExtensionFilter("BMP Files", "*.bmp"),
-                new FileChooser.ExtensionFilter("GIF Files", "*.gif"));
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg",
+                "*.jpeg", "*.gif", "*.bmp");
+        fileChooser.getExtensionFilters().add(extFilterJPG);
 
         File selectedFile = fileChooser.showOpenDialog(this.getCurrentStage());
 
