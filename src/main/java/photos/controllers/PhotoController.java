@@ -12,9 +12,11 @@ package main.java.photos.controllers;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -198,6 +200,12 @@ public class PhotoController extends ParentController implements Initializable
      */
     public final int NUM_OF_PHOTO_SLOTS = 14;
 
+    /**
+     * variable that sets the number of pages of pictures
+     * to show in album
+     */
+    public int page = 0;
+
     // public ImageView[] thumbnails = {thumbnail1, thumbnail2, thumbnail3, thumbnail4, 
     //                     thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9, 
     //                     thumbnail10, thumbnail11, thumbnail12, thumbnail13, thumbnail14};
@@ -363,9 +371,82 @@ public class PhotoController extends ParentController implements Initializable
         else
         {
             Tag tag = new Tag(tagString);
+            if (chosenPhoto.findTag(tag) == null)
+            {
+                ErrorMessage.showError(ErrorCode.AUTHERROR, "No such Tag found",
+                    "Please fill in a new Tag.");
+            }
             chosenPhoto.removeTag(chosenPhoto.findTag(tag));
         }
 
+        displayAlbum(album);
+    }
+
+    /**
+     * Checks for clicks on grid to see selections
+     * @param event 
+     */
+    @FXML
+    public void clickGrid(javafx.scene.input.MouseEvent event) {
+        Node clickedNode = event.getPickResult().getIntersectedNode();
+        if (clickedNode != albumGridContainer) {
+            // click on descendant node
+            Integer colIndex = GridPane.getColumnIndex(clickedNode);
+            Integer rowIndex = GridPane.getRowIndex(clickedNode);
+
+            if (colIndex == null)
+            {
+                colIndex = 0;
+            }
+            if (rowIndex == null)
+            {
+                rowIndex = 0;
+            }
+            
+            if (getDisplayedPhoto(page, rowIndex, colIndex) != null)
+            {
+                chosenPhoto = getDisplayedPhoto(page, rowIndex, colIndex);
+            }
+            displayAlbum(album);
+            //System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
+        }
+    }
+
+    /**
+     * Will show the next photo in album when clicked
+     * @param event
+     */
+    @FXML
+    public void nextPhoto(ActionEvent event)
+    {
+        if (album.getIndexOfPhoto(chosenPhoto) < album.getNumOfPhotosInAlbum()-1)
+        {   
+            chosenPhoto = album.getNextPhoto(chosenPhoto);
+            if(album.getIndexOfPhoto(chosenPhoto)+1 > (page+1)*NUM_OF_PHOTO_SLOTS)
+            {
+                page++;
+            }
+        }
+        displayAlbum(album);
+    }
+
+    /**
+     * Will show the previous photo in album when clicked
+     * @param event
+     */
+    @FXML
+    public void previousPhoto(ActionEvent event)
+    {
+        if (album.getIndexOfPhoto(chosenPhoto) > 0)
+        {   
+            int beforeIndex = album.getIndexOfPhoto(chosenPhoto)+1;
+            chosenPhoto = album.getPreviousPhoto(chosenPhoto);
+            int afterIndex = album.getIndexOfPhoto(chosenPhoto)+1;
+            if(beforeIndex == (page*NUM_OF_PHOTO_SLOTS+1) && afterIndex == (page*NUM_OF_PHOTO_SLOTS) && page != 0)
+            {
+                page--;
+            }
+        }
         displayAlbum(album);
     }
 
@@ -380,11 +461,23 @@ public class PhotoController extends ParentController implements Initializable
     {
         for (int i = 0; i < NUM_OF_PHOTO_SLOTS; i++)
         {
-            if (album.getNumOfPhotosInAlbum() > i)
+            if (album.getNumOfPhotosInAlbum() > i+(page*NUM_OF_PHOTO_SLOTS))
             {
-                displayPhoto(album.getPhotosInAlbum().get(i), album.getPhotosInAlbum().get(i).getFile(), thumbnailGetter(i));
+                if (page > 0)
+                {
+                    displayPhoto(album.getPhotosInAlbum().get(i+page*(NUM_OF_PHOTO_SLOTS)), album.getPhotosInAlbum().get(i+page*(NUM_OF_PHOTO_SLOTS)).getFile(), thumbnailGetter(i));
+                }
+                else
+                {
+                    displayPhoto(album.getPhotosInAlbum().get(i), album.getPhotosInAlbum().get(i).getFile(), thumbnailGetter(i));
+                }
+            }
+            else
+            {
+                clearPhoto(thumbnailGetter(i));
             }
         }
+
         if (chosenPhoto != null)
         {
             displayPhoto(chosenPhoto, chosenPhoto.getFile(), photoViewBox);
@@ -413,7 +506,7 @@ public class PhotoController extends ParentController implements Initializable
             {
                 captionTextBox.setText(photo.getCaption());
                 tagTextBox.setText(photo.setTagsToString());
-                //dateTextBox.setText(photo.getDate());
+                dateTextBox.setText(photo.dateToString(photo.getDate()));
             }
         }
         catch (IOException e) 
@@ -457,6 +550,23 @@ public class PhotoController extends ParentController implements Initializable
             case 13: return thumbnail14;
         }
         return null;
+    }
+
+    /**
+     * Helper to return the correct photo in grid
+     */
+    public Photo getDisplayedPhoto(int page, int row, int column)
+    {
+        int selector = 0;
+        selector = NUM_OF_PHOTO_SLOTS*page + row*(NUM_OF_PHOTO_SLOTS/2) + column;
+        if (album.getPhotosInAlbum().get(selector) != null)
+        {
+            return album.getPhotosInAlbum().get(selector);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override

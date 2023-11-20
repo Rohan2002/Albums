@@ -201,6 +201,11 @@ public class Album implements Serializable
         return false;
     }
 
+    /**
+     * gets index of a photo
+     * @param photo
+     * @return
+     */
     public int getIndexOfPhoto(Photo photo)
     {
         for (int i = 0; i < this.getNumOfPhotosInAlbum(); i++)
@@ -211,6 +216,38 @@ public class Album implements Serializable
             }
         }
         return -1;
+    }
+
+    /**
+     * returns the next photo in the album
+     * @param photo
+     * @return
+     */
+    public Photo getNextPhoto(Photo photo)
+    {
+        int index = getIndexOfPhoto(photo);
+        index++;
+        if (index < this.getNumOfPhotosInAlbum())
+        {
+            return this.getPhotosInAlbum().get(index);
+        }
+        return null;
+    }
+
+    /**
+     * returns the previous photo in the album
+     * @param photo
+     * @return
+     */
+    public Photo getPreviousPhoto(Photo photo)
+    {
+        int index = getIndexOfPhoto(photo);
+        index--;
+        if (index >= 0)
+        {
+            return this.getPhotosInAlbum().get(index);
+        }
+        return null;
     }
 
     // /**

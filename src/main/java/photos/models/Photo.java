@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -206,6 +207,21 @@ public class Photo implements Serializable
 			totalString = totalString + tags.get(i).tagAsString() + ", ";
 		}
 		return totalString;
+	}
+
+	public String dateToString(Date date)
+	{
+		if (date != null)
+		{
+			String pattern = "MM/dd/yyyy";
+			DateFormat df = new SimpleDateFormat(pattern);
+			String todayAsString = df.format(date);
+			return todayAsString;
+		}
+		else
+		{
+			return "";
+		}
 	}
 
     // /**
