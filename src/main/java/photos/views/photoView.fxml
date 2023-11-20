@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="albumName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="nextPictureButton" layoutX="297.0" layoutY="346.0" mnemonicParsing="false" onAction="#nextPhoto" text="Next" />
       <Button fx:id="previousPictureButton" layoutX="20.0" layoutY="346.0" mnemonicParsing="false" onAction="#previousPhoto" text="Previous" />
@@ -29,8 +29,8 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="backToAlbumsListButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backToAlbumsList" text="Back to Albums List" />
-      <Button fx:id="logOutButton" layoutX="517.0" layoutY="20.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+      <Button fx:id="backToAlbumsListButton" layoutX="23.0" layoutY="18.0" mnemonicParsing="false" onAction="#backToAlbumsList" text="Back to Albums List" />
+      <Button fx:id="logOutButton" layoutX="515.0" layoutY="18.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
       <Button fx:id="addPhotoButton" layoutX="26.0" layoutY="214.0" mnemonicParsing="false" onAction="#addPhoto" text="Add a Photo" />
       <Button fx:id="deletePhotoButton" layoutX="482.0" layoutY="214.0" mnemonicParsing="false" onAction="#deletePhoto" text="Delete a Photo" />
       <TextField fx:id="addOrChangeCaptionTextBox" layoutX="11.0" layoutY="480.0" prefHeight="26.0" prefWidth="239.0" promptText="'This was a great trip'" />

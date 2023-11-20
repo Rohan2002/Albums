@@ -23,12 +23,7 @@ import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 import javafx.scene.control.PasswordField;
 
-public class LoginController {
-    /**
-     * Data structure to store the User objects.
-     */
-    private UserList userList;
-
+public class LoginController extends ParentController {
     /**
      * Username field for the user auth.
      */
@@ -57,20 +52,15 @@ public class LoginController {
         // Initialize the controller (called after FXML load)
         try {
             UserList userList = new UserList();
-
             // add stock user
             User stockUser = new User("stock", "stock");
-            if (!userList.userExists(stockUser)) {
-                userList.addUser(stockUser);
-            }
+            userList.addUser(stockUser);
 
             // add admin user
             User adminUser = new User("admin", "admin");
-            if (!userList.userExists(adminUser)) {
-                userList.addUser(adminUser);
-            }
+            userList.addUser(adminUser);
 
-            this.userList = userList;
+            this.setUpdatedUserList(userList);
         } catch (IOException e) {
             e.printStackTrace();
             ErrorMessage.showError(ErrorCode.APPERROR, "Cannot load users", e.getMessage());
@@ -99,20 +89,24 @@ public class LoginController {
     }
 
     /**
-     * After successful auth for non-admin, display the non-admin subsystem page which is the album logic.
+     * After successful auth for non-admin, display the non-admin subsystem page
+     * which is the album logic.
      */
     private void albumView(User u) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/albumView.fxml"));
-            
+            Stage stage = new Stage();
             AlbumController albumController = new AlbumController();
-            albumController.setMainUser(u, userList);
+
+            albumController.setActiveUser(u);
+            albumController.setCurrentStage(stage);
+            albumController.setUpdatedUserList(getUpdatedUserList());
+
             loader.setController(albumController);
 
             Parent root = loader.load();
-
-            Stage stage = new Stage();
             stage.setScene(new Scene(root));
+
             stage.show();
 
             // Close the current login window if needed
@@ -123,9 +117,10 @@ public class LoginController {
             ErrorMessage.showError(ErrorCode.APPERROR, "Cannot login as regular user", e.getMessage());
         }
     }
-    
+
     /**
      * Responsible for checking authentication of the actual user.
+     * 
      * @param event
      */
     @FXML
@@ -135,13 +130,12 @@ public class LoginController {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete auth fields",
                     "Please fill in the username or password.");
         }
-        String uname = usernameField.getText().toLowerCase();
+        String uname = usernameField.getText();
         String pword = passwordField.getText();
 
-        User logginInUser = new User(uname, pword);
-
-        if (this.userList.userExists(logginInUser)) {
-            if (logginInUser.getUsername().equals("admin")) {
+        User logginInUser = this.getUpdatedUserList().getUser(uname, pword);
+        if (logginInUser != null) {
+            if (logginInUser.getUsername().equalsIgnoreCase("admin")) {
                 adminView();
             } else {
                 albumView(logginInUser);

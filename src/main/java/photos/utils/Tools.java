@@ -34,6 +34,9 @@ public class Tools {
      * @return True if the directory is deleted else False
      */
     public static boolean deleteDirectory(File directory) {
+        if (directory == null){
+            return true;
+        }
         if (!directory.isDirectory()) {
             return false;
         }

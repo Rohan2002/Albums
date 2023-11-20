@@ -1,3 +1,11 @@
+/**
+ * This class represents the main entry point of our Photo app.
+ * This first page that will be displayed is the user authentication.
+ * 
+ * @author Rohan Deshpande
+ * @author Saman Sathenjeri
+ * @version 1.0
+ */
 package main.java.photos;
 
 import javafx.application.Application;
@@ -5,14 +13,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.java.photos.utils.Tools;
-
 public class Photos extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        System.out.println(Tools.getDataDir());
-        Parent root = FXMLLoader.load(getClass().getResource("views/auth.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/auth.fxml"));
+        Parent root = loader.load();
+        
         primaryStage.setTitle("Photos59");
         primaryStage.setScene(new Scene(root, 400, 300));
         primaryStage.show();

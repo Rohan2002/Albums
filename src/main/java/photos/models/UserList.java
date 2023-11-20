@@ -33,6 +33,10 @@ public class UserList {
      */
     public UserList() throws IOException {
         this.userListLocation = Tools.getDataDir().getPath() + File.separator + "ulist.ser";
+        File userListLocationFile = new File(this.userListLocation);
+        if(!userListLocationFile.exists()){
+            userListLocationFile.createNewFile();
+        }
     }
 
     /**
@@ -112,32 +116,51 @@ public class UserList {
                     return false;
                 }
                 iterator.remove();
-                removedUser = saveUserList(userList);;
+                removedUser = saveUserList(userList);
             }
         }
         return removedUser;
     }
 
-    /*
-     * Update user list on disk with new user object
-     *  
+    /**
+     * Update user list on disk with updated user object.
+     * 
+     * @param User object
+     * @return true if User was updated successfully else false.
      */
     public boolean updateUser(User updatedUser){
-        boolean updatedUserStatus = false;
-        ArrayList<User> userList = fetchUserList();
-        Iterator<User> iterator = userList.iterator();
-        while (iterator.hasNext()) {
-            User user = iterator.next();
-            // found the exisitng user in the user list.
-            if (updatedUser.getUsername().equalsIgnoreCase(user.getUsername())) {
-                iterator.remove();
-                updatedUserStatus = userList.add(updatedUser);
-                break;
-            }
-        }
-        return updatedUserStatus;
+        ArrayList<User> u = fetchUserList();
+
+        /**
+         * 
+         * The username and password determines if two users are the same or not.
+         * If two users have the same username and password but have different
+         * albums then we say that the user is actually updated rather than replaced.
+         * So a simple indexOf with the updatedUser object is enough to find the user to update.
+         * becaused indexOf relies on the User's equality method.
+         */
+
+        int oldUserIndex = u.indexOf(updatedUser);
+        u.set(oldUserIndex, updatedUser);
+        boolean saveUserListStatus = saveUserList(u);
+        return saveUserListStatus;
     }
 
+    /**
+     * A routine to check if there is a user with 
+     * username and password in the list. If not exists
+     * then return null for that user.
+     * @return
+     */
+    public User getUser(String username, String password){
+        ArrayList<User> users = this.fetchUserList();
+        for(User u: users){
+            if(username.equalsIgnoreCase(u.getUsername()) && password.equals(u.getPassword())){
+                return u;
+            }
+        }
+        return null;
+    }
 
     /**
      * Read user list from disk.

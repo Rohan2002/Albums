@@ -2,11 +2,12 @@
  * This class is responsible for the Album Subsystem.
  * The Album subsystem can create, delete and view albums on the application.
  * 
- * @author Saman Sathenjeri
+ * @author Saman Sathenjeri, Rohan Deshpande
  * @version 1.0
  */
 
 package main.java.photos.controllers;
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -24,8 +25,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.java.photos.models.Album;
-import main.java.photos.models.User;
-import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 import java.util.ArrayList;
@@ -33,18 +32,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
-public class AlbumController extends ParentController implements Initializable
-{
-    /**
-     * Data structure to store the userList.
-     */
-    private UserList userList;
-
-    /**
-     * The user that is viewing their albums
-     */
-    private User user;
-
+public class AlbumController extends ParentController implements Initializable {
     /**
      * The button to create an Album
      */
@@ -112,148 +100,131 @@ public class AlbumController extends ParentController implements Initializable
 
     /**
      * Create album with new album name
+     * 
      * @param event
      */
     @FXML
-    private void createAlbumAction(ActionEvent event)
-    {
+    private void createAlbumAction(ActionEvent event) {
         String albumName = createAlbumTextBox.getText();
         if (createAlbumTextBox.getLength() < 1) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
                     "Please fill in a new Album Name.");
-        }
-        else
-        {
-            if (!user.duplicateAlbumName(albumName))
-            {
+        } else {
+            if (!this.getActiveUser().duplicateAlbumName(albumName)) {
                 Album newAlbum = new Album(albumName);
-                user.addAlbum(newAlbum);
-            }
-            else
-            {
+                this.getActiveUser().addAlbum(newAlbum);
+            } else {
                 ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
                         "Please fill in a different Album Name.");
+                return;
             }
         }
 
-        displayList(user.getAlbumsList());
+        displayList(this.getActiveUser().getAlbumsList());
+        saveUserToDisk(this.getActiveUser());
     }
 
     /**
      * Deletes chosen album
+     * 
      * @param event
      */
     @FXML
-    private void deleteAlbumAction(ActionEvent event)
-    {
-        if (albumChosen != null)
-        {
-            user.deleteAlbum(albumChosen);
-        }
-        else
-        {
+    private void deleteAlbumAction(ActionEvent event) {
+        if (albumChosen != null) {
+            this.getActiveUser().deleteAlbum(albumChosen);
+        } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No Album Chosen",
                     "Please click on an album to delete.");
         }
         albumChosen = null;
         clearFields();
-        displayList(user.getAlbumsList());
+        displayList(this.getActiveUser().getAlbumsList());
+        saveUserToDisk(this.getActiveUser());
     }
 
     /**
      * Renames chosen Album
+     * 
      * @param event
      */
     @FXML
-    private void renameAlbumAction(ActionEvent event)
-    {
+    private void renameAlbumAction(ActionEvent event) {
         String newAlbumName = renameAlbumTextBox.getText();
 
-        if (albumChosen != null)
-        {
+        if (albumChosen != null) {
             if (renameAlbumTextBox.getLength() < 1) {
                 ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
                         "Please fill in the new Album Name.");
-            }
-            else if (!user.duplicateAlbumName(newAlbumName))
-            {
+            } else if (!this.getActiveUser().duplicateAlbumName(newAlbumName)) {
                 albumChosen.setAlbumName(newAlbumName);
-            }
-            else
-            {
+            } else {
                 ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
                         "Please fill in a different Album Name.");
             }
-        }
-        else
-        {
+        } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No Album Chosen",
                     "Please click on an album to delete.");
         }
 
-        displayList(user.getAlbumsList());
+        displayList(this.getActiveUser().getAlbumsList());
+        saveUserToDisk(this.getActiveUser());
     }
 
     /**
      * Opens album and sets to photo stage
+     * 
      * @param event
      */
     @FXML
-    private void openAlbumAction(ActionEvent event)
-    {
-        if (albumChosen != null)
-        {
-            try {
-                // FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/photoView.fxml"));
-                // Parent root = loader.load();
-
-                // Stage stage = new Stage();
-                // stage.setScene(new Scene(root));
-                // stage.show();
-
-                // // Close the current login window if needed
-                // ((Stage) openAlbum.getScene().getWindow()).close();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/photoView.fxml"));
-            
-                PhotoController photoController = new PhotoController();
-                Stage stage = new Stage();
-                photoController.setMainAlbum(user, albumChosen, userList, stage);
-                loader.setController(photoController);
-
-                Parent root = loader.load();
-
-                stage.setScene(new Scene(root));
-                stage.show();
-
-                // Close the current login window if needed
-                ((Stage) openAlbum.getScene().getWindow()).close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                ErrorMessage.showError(ErrorCode.APPERROR, "Cannot open Album", e.getMessage());
-            }
-        }
-        else
-        {
+    private void openAlbumAction(ActionEvent event) {
+        if (albumChosen == null) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No Album Chosen",
                     "Please click on an album to delete.");
+            return;
         }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/photoView.fxml"));
+            Stage stage = new Stage();
+            PhotoController photoController = new PhotoController();
+
+            this.getActiveUser().setActiveAlbum(albumChosen);
+            
+            photoController.setActiveUser(getActiveUser());
+            photoController.setCurrentStage(stage);
+            photoController.setUpdatedUserList(getUpdatedUserList());
+
+            loader.setController(photoController);
+
+            Parent root = loader.load();
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Close the current login window if needed
+            ((Stage) openAlbum.getScene().getWindow()).close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            ErrorMessage.showError(ErrorCode.APPERROR, "Cannot open Album", e.getMessage());
+        }
+
     }
 
     /**
      * returns the album that the user is viewing
+     * 
      * @param event
      * @return album
      */
-    private Album getLiveAlbum(ActionEvent event)
-    {
+    private Album getLiveAlbum(ActionEvent event) {
         albumList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Album>() {
 
             @Override
             public void changed(ObservableValue<? extends Album> arg0, Album arg1, Album arg2) {
                 albumChosen = albumList.getSelectionModel().getSelectedItem();
             }
-            
+
         });
         albumChosenTextBox.setText(albumChosen.getAlbumName());
         numOfPhotosOnAlbumTextBox.setText(Integer.toString(albumChosen.getNumOfPhotosInAlbum()));
@@ -263,45 +234,18 @@ public class AlbumController extends ParentController implements Initializable
 
     /**
      * Routine to update the albums view after add/delete/rename.
+     * 
      * @param album
      */
-    public void displayList(ArrayList<Album> albums)
-    {
+    public void displayList(ArrayList<Album> albums) {
         ObservableList<Album> items = FXCollections.observableArrayList(albums);
         this.albumList.setItems(items);
-        userList.updateUser(user);
     }
-
-    /**
-     * Takes in the user object that has logged in and brings in to album controller
-     * @param u
-     */
-    public void setMainUser(User user, UserList userlist)
-    {
-        this.user = user;
-        this.userList = userlist;
-        //displayList(user.getAlbumsList());
-    }
-
-    // /**
-    //  * Init user list for app
-    //  */
-    // @FXML
-    // private void initialize() {
-    //     try {
-    //         UserList userList = new UserList();
-    //         this.userList = userList;
-
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //         ErrorMessage.showError(ErrorCode.ADMINERROR, "Cannot load users", e.getMessage());
-    //     }
-    // }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         albumChosen = null;
-        displayList(user.getAlbumsList());
+        displayList(this.getActiveUser().getAlbumsList());
         albumList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Album>() {
 
             @Override
@@ -309,19 +253,23 @@ public class AlbumController extends ParentController implements Initializable
                 albumChosen = albumList.getSelectionModel().getSelectedItem();
                 updateFields();
             }
-            
+
         });
     }
 
-    private void updateFields()
-    {
+    private void updateFields() {
+        if (albumChosen == null) {
+            albumChosenTextBox.setText("");
+            numOfPhotosOnAlbumTextBox.setText("0");
+            dateRangesTextBox.setText("N/A");
+            return;
+        }
         albumChosenTextBox.setText(albumChosen.getAlbumName());
         numOfPhotosOnAlbumTextBox.setText(Integer.toString(albumChosen.getNumOfPhotosInAlbum()));
         dateRangesTextBox.setText(albumChosen.getAlbumDateRange());
     }
 
-    private void clearFields()
-    {
+    private void clearFields() {
         albumChosenTextBox.clear();
         numOfPhotosOnAlbumTextBox.clear();
         dateRangesTextBox.clear();

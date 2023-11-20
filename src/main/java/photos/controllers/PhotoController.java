@@ -9,12 +9,11 @@
  */
 
 package main.java.photos.controllers;
+
 import java.io.IOException;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,14 +26,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.java.photos.models.Album;
 import main.java.photos.models.Photo;
 import main.java.photos.models.Tag;
-import main.java.photos.models.User;
-import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 
@@ -51,24 +46,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 
-public class PhotoController extends ParentController implements Initializable 
-{
-    /**
-     * The album we will be viewing
-     */
-    private Album album;
-
-    /**
-     * Data structure to store the userList.
-     */
-    private UserList userList;
-
-    /**
-     * The album we will be viewing
-     */
-    private User user;
+public class PhotoController extends ParentController implements Initializable {
 
     /**
      * Button for viewing next picture
@@ -135,7 +114,7 @@ public class PhotoController extends ParentController implements Initializable
      */
     @FXML
     private Button addPhotoButton;
-    
+
     /**
      * Button to delete a photo to album
      */
@@ -213,13 +192,8 @@ public class PhotoController extends ParentController implements Initializable
      */
     @FXML
     private ImageView thumbnail1, thumbnail2, thumbnail3, thumbnail4, thumbnail5,
-                        thumbnail6, thumbnail7, thumbnail8, thumbnail9, thumbnail10,
-                        thumbnail11, thumbnail12, thumbnail13, thumbnail14;
-
-    /**
-     * stage that we bring in
-     */
-    public Stage stage;
+            thumbnail6, thumbnail7, thumbnail8, thumbnail9, thumbnail10,
+            thumbnail11, thumbnail12, thumbnail13, thumbnail14;
 
     /**
      * main photo we will be looking at
@@ -247,44 +221,36 @@ public class PhotoController extends ParentController implements Initializable
      */
     public Album showAlbum;
 
-    // public ImageView[] thumbnails = {thumbnail1, thumbnail2, thumbnail3, thumbnail4, 
-    //                     thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9, 
-    //                     thumbnail10, thumbnail11, thumbnail12, thumbnail13, thumbnail14};
+    // public ImageView[] thumbnails = {thumbnail1, thumbnail2, thumbnail3,
+    // thumbnail4,
+    // thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9,
+    // thumbnail10, thumbnail11, thumbnail12, thumbnail13, thumbnail14};
 
     // public ArrayList<ImageView> thumbnails = new ArrayList<ImageView>(
-    //                     Arrays.asList(thumbnail1, thumbnail2, thumbnail3, thumbnail4, 
-    //                     thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9, 
-    //                     thumbnail10, thumbnail11, thumbnail12, thumbnail13, thumbnail14));
-
-    /**
-     * Takes in the album object to view and manipulate the photos inside
-     * @param u
-     */
-    public void setMainAlbum(User user, Album album, UserList userlist, Stage stage)
-    {
-        this.user = user;
-        this.album = album;
-        this.userList = userlist;
-        this.stage = stage;
-    }
+    // Arrays.asList(thumbnail1, thumbnail2, thumbnail3, thumbnail4,
+    // thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9,
+    // thumbnail10, thumbnail11, thumbnail12, thumbnail13, thumbnail14));
 
     /**
      * Takes user back to albums list
+     * 
      * @param event
      */
     @FXML
-    private void backToAlbumsList(ActionEvent event)
-    {
+    private void backToAlbumsList(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/albumView.fxml"));
+            Stage stage = new Stage();
 
             AlbumController albumController = new AlbumController();
-            albumController.setMainUser(user, userList);
+
+            albumController.setActiveUser(getActiveUser());
+            albumController.setCurrentStage(stage);
+            albumController.setUpdatedUserList(getUpdatedUserList());
+
             loader.setController(albumController);
 
             Parent root = loader.load();
-
-            Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -300,132 +266,126 @@ public class PhotoController extends ParentController implements Initializable
     /**
      * Uses FileChooser to add photo to album
      * 
-     * **************NEED TO ADD FUNCTIONALITY TO ADD CAPTION AND TAGS WHEN ADDING PICTURE ****************
+     * **************NEED TO ADD FUNCTIONALITY TO ADD CAPTION AND TAGS WHEN ADDING
+     * PICTURE ****************
      * 
      * @param event
      */
     @FXML
-    private void addPhoto(ActionEvent event)
-    {
+    private void addPhoto(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        
-        //fileChooser.setInitialDirectory(new File("data"));
+
+        // fileChooser.setInitialDirectory(new File("data"));
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("JPEG Files", "*.jpeg"),
-            new FileChooser.ExtensionFilter("PNG Files", "*.png"),
-            new FileChooser.ExtensionFilter("BMP Files", "*.bmp"),
-            new FileChooser.ExtensionFilter("GIF Files", "*.gif"));
+                new FileChooser.ExtensionFilter("New JPEG Files", "*.jpg"),
+                new FileChooser.ExtensionFilter("JPEG Files", "*.jpeg"),
+                new FileChooser.ExtensionFilter("PNG Files", "*.png"),
+                new FileChooser.ExtensionFilter("BMP Files", "*.bmp"),
+                new FileChooser.ExtensionFilter("GIF Files", "*.gif"));
 
-        File selectedFile = fileChooser.showOpenDialog(stage);
+        File selectedFile = fileChooser.showOpenDialog(this.getCurrentStage());
 
-        Photo addedPhoto = new Photo(user, selectedFile);
+        Photo addedPhoto = new Photo(this.getActiveUser(), selectedFile);
 
-        if (!album.duplicatePhoto(addedPhoto))
-        {
-            album.addPhoto(addedPhoto);
+        if (!this.getActiveUser().getActiveAlbum().duplicatePhoto(addedPhoto)) {
+            this.getActiveUser().getActiveAlbum().addPhoto(addedPhoto);
             chosenPhoto = addedPhoto;
-            //displayPhoto(addedPhoto, selectedFile, photoViewBox);
-        }
-        else
-        {
+            // displayPhoto(addedPhoto, selectedFile, photoViewBox);
+        } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Photo in Album",
-                        "Please choose a different Photo.");
+                    "Please choose a different Photo.");
         }
 
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
+        saveUserToDisk(getActiveUser());
     }
 
     /**
      * Deletes chosen photo from album
+     * 
      * @param event
      */
     @FXML
-    private void deletePhoto(ActionEvent event)
-    {
-        if (chosenPhoto != null)
-        {
-            clearPhoto(thumbnailGetter(album.getIndexOfPhoto(chosenPhoto)));
-            album.deletePhoto(chosenPhoto);
-        }
-        else
-        {
+    private void deletePhoto(ActionEvent event) {
+        if (chosenPhoto != null) {
+            clearPhoto(thumbnailGetter(this.getActiveUser().getActiveAlbum().getIndexOfPhoto(chosenPhoto)));
+            this.getActiveUser().getActiveAlbum().deletePhoto(chosenPhoto);
+        } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No Album Chosen",
                     "Please click on an album to delete.");
         }
         chosenPhoto = null;
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
+        saveUserToDisk(getActiveUser());
     }
 
     /**
      * Function to add or change the caption of a photo
+     * 
      * @param event
      */
     @FXML
-    private void addOrChangeCaption(ActionEvent event)
-    {
+    private void addOrChangeCaption(ActionEvent event) {
         String caption = addOrChangeCaptionTextBox.getText();
         if (addOrChangeCaptionTextBox.getLength() < 1) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
                     "Please fill in a new Caption.");
-        }
-        else
-        {
+        } else {
             chosenPhoto.setCaption(caption);
         }
 
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
+        saveUserToDisk(getActiveUser());
     }
 
     /**
      * Function to add a tag to a photo
+     * 
      * @param event
      */
     @FXML
-    private void addTag(ActionEvent event)
-    {
+    private void addTag(ActionEvent event) {
         String tagString = addOrRemoveTagTextBox.getText();
         if (addOrRemoveTagTextBox.getLength() < 1) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
                     "Please fill in a new Tag.");
-        }
-        else
-        {
+        } else {
             Tag tag = new Tag(tagString);
             chosenPhoto.addTag(tag);
         }
 
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
+        saveUserToDisk(getActiveUser());
     }
 
     /**
      * Function to remove a tag to a photo
+     * 
      * @param event
      */
     @FXML
-    private void removeTag(ActionEvent event)
-    {
+    private void removeTag(ActionEvent event) {
         String tagString = addOrRemoveTagTextBox.getText();
         if (addOrRemoveTagTextBox.getLength() < 1) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
                     "Please fill in a new Tag.");
-        }
-        else
-        {
+        } else {
             Tag tag = new Tag(tagString);
-            if (chosenPhoto.findTag(tag) == null)
-            {
+            if (chosenPhoto.findTag(tag) == null) {
                 ErrorMessage.showError(ErrorCode.AUTHERROR, "No such Tag found",
-                    "Please fill in a new Tag.");
+                        "Please fill in a new Tag.");
             }
             chosenPhoto.removeTag(chosenPhoto.findTag(tag));
         }
 
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
+        saveUserToDisk(getActiveUser());
     }
 
     /**
      * Checks for clicks on grid to see selections
-     * @param event 
+     * 
+     * @param event
      */
     @FXML
     public void clickGrid(javafx.scene.input.MouseEvent event) {
@@ -435,158 +395,146 @@ public class PhotoController extends ParentController implements Initializable
             Integer colIndex = GridPane.getColumnIndex(clickedNode);
             Integer rowIndex = GridPane.getRowIndex(clickedNode);
 
-            if (colIndex == null)
-            {
+            if (colIndex == null) {
                 colIndex = 0;
             }
-            if (rowIndex == null)
-            {
+            if (rowIndex == null) {
                 rowIndex = 0;
             }
-            
-            if (getDisplayedPhoto(page, rowIndex, colIndex) != null)
-            {
+
+            if (getDisplayedPhoto(page, rowIndex, colIndex) != null) {
                 chosenPhoto = getDisplayedPhoto(page, rowIndex, colIndex);
             }
-            displayAlbum(album);
-            //System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
+            displayAlbum(this.getActiveUser().getActiveAlbum());
+            // System.out.println("Mouse clicked cell: " + colIndex + " And: " + rowIndex);
         }
     }
 
     /**
      * Will show the next photo in album when clicked
+     * 
      * @param event
      */
     @FXML
-    public void nextPhoto(ActionEvent event)
-    {
-        if (album.getIndexOfPhoto(chosenPhoto) < album.getNumOfPhotosInAlbum()-1)
-        {   
-            chosenPhoto = album.getNextPhoto(chosenPhoto);
-            if(album.getIndexOfPhoto(chosenPhoto)+1 > (page+1)*NUM_OF_PHOTO_SLOTS)
-            {
+    public void nextPhoto(ActionEvent event) {
+        if (this.getActiveUser().getActiveAlbum()
+                .getIndexOfPhoto(chosenPhoto) < this.getActiveUser().getActiveAlbum().getNumOfPhotosInAlbum() - 1) {
+            chosenPhoto = this.getActiveUser().getActiveAlbum().getNextPhoto(chosenPhoto);
+            if (this.getActiveUser().getActiveAlbum().getIndexOfPhoto(chosenPhoto) + 1 > (page + 1)
+                    * NUM_OF_PHOTO_SLOTS) {
                 page++;
             }
         }
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
     }
 
     /**
      * Will show the previous photo in album when clicked
+     * 
      * @param event
      */
     @FXML
-    public void previousPhoto(ActionEvent event)
-    {
-        if (album.getIndexOfPhoto(chosenPhoto) > 0)
-        {   
-            int beforeIndex = album.getIndexOfPhoto(chosenPhoto)+1;
-            chosenPhoto = album.getPreviousPhoto(chosenPhoto);
-            int afterIndex = album.getIndexOfPhoto(chosenPhoto)+1;
-            if(beforeIndex == (page*NUM_OF_PHOTO_SLOTS+1) && afterIndex == (page*NUM_OF_PHOTO_SLOTS) && page != 0)
-            {
+    public void previousPhoto(ActionEvent event) {
+        if (this.getActiveUser().getActiveAlbum().getIndexOfPhoto(chosenPhoto) > 0) {
+            int beforeIndex = this.getActiveUser().getActiveAlbum().getIndexOfPhoto(chosenPhoto) + 1;
+            chosenPhoto = this.getActiveUser().getActiveAlbum().getPreviousPhoto(chosenPhoto);
+            int afterIndex = this.getActiveUser().getActiveAlbum().getIndexOfPhoto(chosenPhoto) + 1;
+            if (beforeIndex == (page * NUM_OF_PHOTO_SLOTS + 1) && afterIndex == (page * NUM_OF_PHOTO_SLOTS)
+                    && page != 0) {
                 page--;
             }
         }
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
     }
 
     /**
      * Function to move photo from one album to another
+     * 
      * @param event
      */
     @FXML
-    public void movePhotoToAnotherAlbum(ActionEvent event)
-    {
-        if (chosenPhoto != null)
-        {
+    public void movePhotoToAnotherAlbum(ActionEvent event) {
+        if (chosenPhoto != null) {
             ChoiceDialog<Album> albumsDialog = new ChoiceDialog<Album>();
 
             ObservableList<Album> albumsList = albumsDialog.getItems();
-            albumsList.addAll(user.getAlbumsList());
-            albumsList.remove(album);
+            albumsList.addAll(this.getActiveUser().getAlbumsList());
+            albumsList.remove(this.getActiveUser().getActiveAlbum());
             albumsDialog.setHeaderText("Choose an album to move your picture to");
             albumsDialog.setContentText("Choose your album");
 
             Optional<Album> result = albumsDialog.showAndWait();
-            if (result.isPresent())
-            {
+            if (result.isPresent()) {
                 result.get().addPhoto(chosenPhoto);
-                album.deletePhoto(chosenPhoto);
+                this.getActiveUser().getActiveAlbum().deletePhoto(chosenPhoto);
                 chosenPhoto = null;
             }
-        }
-        else
-        {
+        } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No photo chosen",
                     "Please choose a photo to move.");
         }
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
+        saveUserToDisk(getActiveUser());
     }
 
     /**
      * Function to move photo from one album to another
+     * 
      * @param event
      */
     @FXML
-    public void copyPhotoToAnotherAlbum(ActionEvent event)
-    {
-        if (chosenPhoto != null)
-        {
+    public void copyPhotoToAnotherAlbum(ActionEvent event) {
+        if (chosenPhoto != null) {
             ChoiceDialog<Album> albumsDialog = new ChoiceDialog<Album>();
 
             ObservableList<Album> albumsList = albumsDialog.getItems();
-            albumsList.addAll(user.getAlbumsList());
-            albumsList.remove(album);
+            albumsList.addAll(this.getActiveUser().getAlbumsList());
+            albumsList.remove(this.getActiveUser().getActiveAlbum());
             albumsDialog.setHeaderText("Choose an album to copy your picture to");
             albumsDialog.setContentText("Choose your album");
 
             Optional<Album> result = albumsDialog.showAndWait();
-            if (result.isPresent())
-            {
+            if (result.isPresent()) {
                 result.get().addPhoto(chosenPhoto);
             }
-        }
-        else
-        {
+        } else {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No photo chosen",
                     "Please choose a photo to copy.");
         }
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
+        saveUserToDisk(getActiveUser());
     }
 
     /**
      * Function to search by date
+     * 
      * @param event
      */
     @FXML
-    private void searchByDateAction(ActionEvent event)
-    {
+    private void searchByDateAction(ActionEvent event) {
         String searchDate = searchDateTextBox.getText();
         if (searchDateTextBox.getLength() < 1) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
                     "Please fill in a new Date.");
+        } else if (stringToDate(searchDate) != null) {
+            filterAlbum = this.getActiveUser().getActiveAlbum().searchByDate(stringToDate(searchDate));
         }
-        else if (stringToDate(searchDate) != null)
-        {
-            filterAlbum = album.searchByDate(stringToDate(searchDate));
-        }
-        showAlbum = album;
-        album = filterAlbum;
-        displayAlbum(album);
+        showAlbum = this.getActiveUser().getActiveAlbum();
+        this.getActiveUser().setActiveAlbum(filterAlbum);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
     }
 
     /**
      * Function to show normal album instead of filtered album
+     * 
      * @param event
      */
     @FXML
-    private void resetFilter(ActionEvent event)
-    {
-        album = showAlbum;
+    private void resetFilter(ActionEvent event) {
+        this.getActiveUser().setActiveAlbum(showAlbum);
         searchDateTextBox.clear();
         searchTagTextBox.clear();
-        displayAlbum(album);
+        displayAlbum(this.getActiveUser().getActiveAlbum());
     }
 
     /**
@@ -595,9 +543,9 @@ public class PhotoController extends ParentController implements Initializable
     @FXML
     private void makeNewSelectionAlbum()
     {
-        if (!user.duplicateAlbumName(album.getAlbumName()))
+        if (!this.getActiveUser().duplicateAlbumName(this.getActiveUser().getActiveAlbum()getAlbumName()))
         {
-            user.addAlbum(album);
+            this.getActiveUser().addAlbum(this.getActiveUser().getActiveAlbum());
         }
         else
         {
@@ -606,65 +554,58 @@ public class PhotoController extends ParentController implements Initializable
         }
         
     }
-        
+
     /**
      * Will display album thumbnails
+     * 
      * @param album
      */
-    private void displayAlbum(Album album)
-    {
-        for (int i = 0; i < NUM_OF_PHOTO_SLOTS; i++)
-        {
-            if (album.getNumOfPhotosInAlbum() > i+(page*NUM_OF_PHOTO_SLOTS))
-            {
-                if (page > 0)
-                {
-                    displayPhoto(album.getPhotosInAlbum().get(i+page*(NUM_OF_PHOTO_SLOTS)), album.getPhotosInAlbum().get(i+page*(NUM_OF_PHOTO_SLOTS)).getFile(), thumbnailGetter(i));
+    private void displayAlbum(Album album) {
+        for (int i = 0; i < NUM_OF_PHOTO_SLOTS; i++) {
+            if (this.getActiveUser().getActiveAlbum().getNumOfPhotosInAlbum() > i + (page * NUM_OF_PHOTO_SLOTS)) {
+                if (page > 0) {
+                    displayPhoto(
+                            this.getActiveUser().getActiveAlbum().getPhotosInAlbum()
+                                    .get(i + page * (NUM_OF_PHOTO_SLOTS)),
+                            this.getActiveUser().getActiveAlbum().getPhotosInAlbum()
+                                    .get(i + page * (NUM_OF_PHOTO_SLOTS)).getFile(),
+                            thumbnailGetter(i));
+                } else {
+                    displayPhoto(this.getActiveUser().getActiveAlbum().getPhotosInAlbum().get(i),
+                            this.getActiveUser().getActiveAlbum().getPhotosInAlbum().get(i).getFile(),
+                            thumbnailGetter(i));
                 }
-                else
-                {
-                    displayPhoto(album.getPhotosInAlbum().get(i), album.getPhotosInAlbum().get(i).getFile(), thumbnailGetter(i));
-                }
-            }
-            else
-            {
+            } else {
                 clearPhoto(thumbnailGetter(i));
             }
         }
 
-        if (chosenPhoto != null)
-        {
+        if (chosenPhoto != null) {
             displayPhoto(chosenPhoto, chosenPhoto.getFile(), photoViewBox);
-        }
-        else
-        {
+        } else {
             photoViewBox.setImage(null);
         }
     }
 
     /**
      * Helper to Display photo in imageView
+     * 
      * @param event
      */
-    private void displayPhoto(Photo photo, File selectedFile, ImageView imageView)
-    {
-        try 
-        {
+    private void displayPhoto(Photo photo, File selectedFile, ImageView imageView) {
+        try {
             InputStream stream = new FileInputStream(selectedFile);
             Image image = new Image(stream);
-            
-            //Setting image to the image view
+
+            // Setting image to the image view
             imageView.setImage(image);
 
-            if (photo.equals(chosenPhoto))
-            {
+            if (photo.equals(chosenPhoto)) {
                 captionTextBox.setText(photo.getCaption());
                 tagTextBox.setText(photo.setTagsToString());
                 dateTextBox.setText(photo.dateToString(photo.getDate()));
             }
-        }
-        catch (IOException e) 
-        {
+        } catch (IOException e) {
             e.printStackTrace();
             ErrorMessage.showError(ErrorCode.APPERROR, "Cannot open photo", e.getMessage());
         }
@@ -672,36 +613,49 @@ public class PhotoController extends ParentController implements Initializable
 
     /**
      * Helper to clear deleted photos
+     * 
      * @param imageView
      */
-    private void clearPhoto(ImageView imageView)
-    {
+    private void clearPhoto(ImageView imageView) {
         imageView.setImage(null);
     }
 
     /**
      * Helper to return the correct imageview
+     * 
      * @param index
      * @return
      */
-    private ImageView thumbnailGetter(int index)
-    {
-        switch (index) 
-        {
-            case 0: return thumbnail1;
-            case 1: return thumbnail2;
-            case 2: return thumbnail3;
-            case 3: return thumbnail4;
-            case 4: return thumbnail5;
-            case 5: return thumbnail6;
-            case 6: return thumbnail7;
-            case 7: return thumbnail8;
-            case 8: return thumbnail9;
-            case 9: return thumbnail10;
-            case 10: return thumbnail11;
-            case 11: return thumbnail12;
-            case 12: return thumbnail13;
-            case 13: return thumbnail14;
+    private ImageView thumbnailGetter(int index) {
+        switch (index) {
+            case 0:
+                return thumbnail1;
+            case 1:
+                return thumbnail2;
+            case 2:
+                return thumbnail3;
+            case 3:
+                return thumbnail4;
+            case 4:
+                return thumbnail5;
+            case 5:
+                return thumbnail6;
+            case 6:
+                return thumbnail7;
+            case 7:
+                return thumbnail8;
+            case 8:
+                return thumbnail9;
+            case 9:
+                return thumbnail10;
+            case 10:
+                return thumbnail11;
+            case 11:
+                return thumbnail12;
+            case 12:
+                return thumbnail13;
+            case 13:
+                return thumbnail14;
         }
         return null;
     }
@@ -709,41 +663,32 @@ public class PhotoController extends ParentController implements Initializable
     /**
      * Helper to return the correct photo in grid
      */
-    public Photo getDisplayedPhoto(int page, int row, int column)
-    {
+    public Photo getDisplayedPhoto(int page, int row, int column) {
         int selector = 0;
-        selector = NUM_OF_PHOTO_SLOTS*page + row*(NUM_OF_PHOTO_SLOTS/2) + column;
-        if (album.getPhotosInAlbum().get(selector) != null)
-        {
-            return album.getPhotosInAlbum().get(selector);
-        }
-        else
-        {
+        selector = NUM_OF_PHOTO_SLOTS * page + row * (NUM_OF_PHOTO_SLOTS / 2) + column;
+        if (this.getActiveUser().getActiveAlbum().getPhotosInAlbum().get(selector) != null) {
+            return this.getActiveUser().getActiveAlbum().getPhotosInAlbum().get(selector);
+        } else {
             return null;
         }
     }
 
-    public Date stringToDate(String dateString)
-	{
-		DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-		Date date;
-		try 
-		{
-			date = format.parse(dateString);
-            //System.out.println(date);
-			return date;
-		} 
-		catch (ParseException e) 
-		{
-			e.printStackTrace();
-			ErrorMessage.showError(ErrorCode.APPERROR, "Cannot convert to date", e.getMessage());
-		}
-		return null;
-	}
+    public Date stringToDate(String dateString) {
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date date;
+        try {
+            date = format.parse(dateString);
+            // System.out.println(date);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            ErrorMessage.showError(ErrorCode.APPERROR, "Cannot convert to date", e.getMessage());
+        }
+        return null;
+    }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) 
-    {
-        displayAlbum(album);
+    public void initialize(URL location, ResourceBundle resources) {
+        displayAlbum(this.getActiveUser().getActiveAlbum());
     }
 }

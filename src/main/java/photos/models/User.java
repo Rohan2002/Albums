@@ -21,11 +21,12 @@ import main.java.photos.utils.Tools;
 
 public class User implements Serializable {
 
-    //add jdoc comments here
+    // add jdoc comments here
     private String username;
     private String password;
     private File userDirectory;
     private ArrayList<Album> albums;
+    private Album activeAlbum;
 
     /**
      * The user object needs the username and password.
@@ -40,6 +41,7 @@ public class User implements Serializable {
         this.password = p;
         this.userDirectory = null;
         this.albums = new ArrayList<>();
+        this.activeAlbum = null;
     }
 
     /**
@@ -104,6 +106,24 @@ public class User implements Serializable {
     }
 
     /**
+     * Getter for activeAlbum
+     * 
+     * @return active album state
+     */
+    public Album getActiveAlbum() {
+        return this.activeAlbum;
+    }
+
+    /**
+     * Setter for the activeAlbum
+     * 
+     * @param Album to be set.
+     */
+    public void setActiveAlbum(Album setAlbum) {
+        this.activeAlbum = setAlbum;
+    }
+
+    /**
      * To string of the User object.
      */
     @Override
@@ -144,32 +164,24 @@ public class User implements Serializable {
      * @param album
      */
     public void deleteAlbum(Album album) {
-        if (this.getAlbumsList().contains(album))
-        {
+        if (this.getAlbumsList().contains(album)) {
             this.albums.remove(album);
         }
     }
 
     /**
-	 * Finds duplicate Array Names
+     * Finds duplicate Array Names
+     * 
      * @param albumName
-	 */
+     */
     public boolean duplicateAlbumName(String albumName) {
-        for(int y = 0; y<albums.size(); y++) {
-            if(albums.get(y) != null && albums.get(y).getAlbumName().equals(albumName)) {
+        for (int y = 0; y < albums.size(); y++) {
+            if (albums.get(y) != null && albums.get(y).getAlbumName().equals(albumName)) {
                 return true;
             }
         }
         return false;
     }
-
-    /**
-     * Will check if album is empty
-     */
-    // public boolean emptyAlbumCheck()
-    // {
-    //     if()
-    // }
 
     /**
      * Equals comparison of the User object.
