@@ -8,8 +8,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import main.java.photos.utils.ErrorCode;
+import main.java.photos.utils.ErrorMessage;
 
 /**
  * @author Saman Sathenjeri
@@ -80,6 +84,9 @@ public class Photo implements Serializable
 
 		this.tags = new ArrayList<Tag>();
 		calendar.set(Calendar.MILLISECOND, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
 		this.date = calendar.getTime();
 	}
 

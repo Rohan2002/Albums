@@ -258,6 +258,19 @@ public class Album implements Serializable
         return null;
     }
 
+    public Album searchByDate(Date date)
+    {
+        Album returnAlbum = new Album();
+        for(int i = 0; i < photos.size(); i++)
+        {
+            if (photos.get(i).date.equals(date))
+            {
+                returnAlbum.addPhoto(photos.get(i));
+            }
+        }
+        return returnAlbum;
+    }
+
     // /**
 	//  * Writes to the data file
 	//  * @throws IOException

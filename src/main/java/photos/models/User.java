@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import main.java.photos.utils.ErrorCode;
+import main.java.photos.utils.ErrorMessage;
 import main.java.photos.utils.Tools;
 
 public class User implements Serializable {

@@ -130,7 +130,7 @@ public class LoginController {
      */
     @FXML
     private void loginAction(ActionEvent event) {
-        System.out.println(usernameField);
+        // System.out.println(usernameField);
         if (usernameField.getLength() < 1 || passwordField.getLength() < 1) {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete auth fields",
                     "Please fill in the username or password.");

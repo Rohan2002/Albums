@@ -38,12 +38,17 @@ import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 
+import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -186,6 +191,24 @@ public class PhotoController extends ParentController implements Initializable
     private GridPane albumGridContainer;
 
     /**
+     * TextField to search Tags
+     */
+    @FXML
+    private TextField searchTagTextBox;
+
+    /**
+     * Button to make a new album with selection
+     */
+    @FXML
+    private Button makeNewSelectionAlbumButton;
+
+    /**
+     * Button to reset filters
+     */
+    @FXML
+    private Button resetFilter;
+
+    /**
      * Space to view a pictures of the album
      */
     @FXML
@@ -215,9 +238,14 @@ public class PhotoController extends ParentController implements Initializable
     public int page = 0;
 
     /**
-     * The album that you are moving or copying photo to 
+     * The album that carries the photos that match the filter
      */
-    public Album photoChangeAlbum;
+    public Album filterAlbum;
+
+    /**
+     * The album that we filter was put on
+     */
+    public Album showAlbum;
 
     // public ImageView[] thumbnails = {thumbnail1, thumbnail2, thumbnail3, thumbnail4, 
     //                     thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9, 
@@ -526,6 +554,58 @@ public class PhotoController extends ParentController implements Initializable
         }
         displayAlbum(album);
     }
+
+    /**
+     * Function to search by date
+     * @param event
+     */
+    @FXML
+    private void searchByDateAction(ActionEvent event)
+    {
+        String searchDate = searchDateTextBox.getText();
+        if (searchDateTextBox.getLength() < 1) {
+            ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
+                    "Please fill in a new Date.");
+        }
+        else if (stringToDate(searchDate) != null)
+        {
+            filterAlbum = album.searchByDate(stringToDate(searchDate));
+        }
+        showAlbum = album;
+        album = filterAlbum;
+        displayAlbum(album);
+    }
+
+    /**
+     * Function to show normal album instead of filtered album
+     * @param event
+     */
+    @FXML
+    private void resetFilter(ActionEvent event)
+    {
+        album = showAlbum;
+        searchDateTextBox.clear();
+        searchTagTextBox.clear();
+        displayAlbum(album);
+    }
+
+    /**
+     * **************** NEED TO FIX TO ADD NEW ALBUM NAME
+     */
+    @FXML
+    private void makeNewSelectionAlbum()
+    {
+        if (!user.duplicateAlbumName(album.getAlbumName()))
+        {
+            user.addAlbum(album);
+        }
+        else
+        {
+            ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
+                    "Please choose another album name.");
+        }
+        
+    }
         
     /**
      * Will display album thumbnails
@@ -642,6 +722,24 @@ public class PhotoController extends ParentController implements Initializable
             return null;
         }
     }
+
+    public Date stringToDate(String dateString)
+	{
+		DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+		Date date;
+		try 
+		{
+			date = format.parse(dateString);
+            //System.out.println(date);
+			return date;
+		} 
+		catch (ParseException e) 
+		{
+			e.printStackTrace();
+			ErrorMessage.showError(ErrorCode.APPERROR, "Cannot convert to date", e.getMessage());
+		}
+		return null;
+	}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) 
