@@ -73,12 +73,6 @@ public class UserList {
         if (userExists(u)) {
             return false;
         }
-        try {
-            u.initUser();
-        } catch (IOException e) {
-            e.printStackTrace();
-            ErrorMessage.showError(ErrorCode.AUTHERROR, "User creation error", e.getMessage());
-        }
         if (userList.add(u)) {
             return saveUserList(userList);
         }
@@ -111,10 +105,6 @@ public class UserList {
         while (iterator.hasNext()) {
             User user = iterator.next();
             if (user.getUsername().equalsIgnoreCase(usernameToDelete)) {
-                boolean deleteDirectory = Tools.deleteDirectory(user.getUserDirectory());
-                if(!deleteDirectory){
-                    return false;
-                }
                 iterator.remove();
                 removedUser = saveUserList(userList);
             }

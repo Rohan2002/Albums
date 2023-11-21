@@ -10,21 +10,13 @@
 
 package main.java.photos.models;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import main.java.photos.utils.ErrorCode;
-import main.java.photos.utils.ErrorMessage;
-import main.java.photos.utils.Tools;
-
 public class User implements Serializable {
 
-    // add jdoc comments here
     private String username;
     private String password;
-    private File userDirectory;
     private ArrayList<Album> albums;
     private Album activeAlbum;
 
@@ -39,25 +31,8 @@ public class User implements Serializable {
     public User(String u, String p) {
         this.username = u;
         this.password = p;
-        this.userDirectory = null;
         this.albums = new ArrayList<>();
         this.activeAlbum = null;
-    }
-
-    /**
-     * Creates the user's app data directory.
-     * 
-     * @throws IOException Directory cannot be created.
-     */
-    public void initUser() throws IOException {
-        File dataDirFileObj = Tools.getDataDir();
-
-        String userDirectory = dataDirFileObj.getPath() + File.separator + this.username;
-        File userDirFileObj = new File(userDirectory);
-        if (!userDirFileObj.isDirectory() && !userDirFileObj.mkdir()) {
-            throw new IOException("Cannot create user directory: " + userDirectory);
-        }
-        this.userDirectory = userDirFileObj;
     }
 
     /**
@@ -94,15 +69,6 @@ public class User implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * User directory getter
-     * 
-     * @return the user directory
-     */
-    public File getUserDirectory() {
-        return this.userDirectory;
     }
 
     /**

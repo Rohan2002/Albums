@@ -295,6 +295,9 @@ public class PhotoController extends ParentController implements Initializable {
             ErrorMessage.showError(ErrorCode.AUTHERROR, "No Album Chosen",
                     "Please click on an album to delete.");
         }
+        captionTextBox.clear();
+        dateTextBox.clear();
+        tagTextBox.clear();
         chosenPhoto = null;
         displayAlbum(this.getActiveUser().getActiveAlbum());
         saveUserToDisk(getActiveUser());
@@ -328,10 +331,21 @@ public class PhotoController extends ParentController implements Initializable {
     private void addTag(ActionEvent event) {
         String tagString = addOrRemoveTagTextBox.getText();
         if (addOrRemoveTagTextBox.getLength() < 1) {
-            ErrorMessage.showError(ErrorCode.AUTHERROR, "Incomplete field",
+            ErrorMessage.showError(ErrorCode.APPERROR, "Incomplete field",
                     "Please fill in a new Tag.");
+            return;
         } else {
             Tag tag = new Tag(tagString);
+            if(chosenPhoto.getAllTags().contains(tag)){
+                ErrorMessage.showError(ErrorCode.APPERROR, "Duplicate field",
+                    "Please add a unique tag.");
+                return;
+            }
+            if(tagString.split(":").length != 2){
+                ErrorMessage.showError(ErrorCode.APPERROR, "Invalid Tag Format",
+                    "Please add a unique tag.");
+                return;
+            }
             chosenPhoto.addTag(tag);
         }
 

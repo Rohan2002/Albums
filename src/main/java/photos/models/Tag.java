@@ -29,8 +29,8 @@ public class Tag implements Serializable {
      */
     public Tag(String totalTag) {
         String[] arrOfStr = totalTag.split(":", 2);
-        this.tagName = arrOfStr[0];
-        this.tagData = arrOfStr[1];
+        this.tagName = arrOfStr[0].trim();
+        this.tagData = arrOfStr[1].trim();
     }
 
     /**
