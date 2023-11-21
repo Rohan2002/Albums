@@ -235,7 +235,7 @@ public class AlbumController extends ParentController implements Initializable {
     /**
      * Routine to update the albums view after add/delete/rename.
      * 
-     * @param album
+     * @param albums
      */
     public void displayList(ArrayList<Album> albums) {
         ObservableList<Album> items = FXCollections.observableArrayList(albums);

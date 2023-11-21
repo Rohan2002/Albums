@@ -63,7 +63,7 @@ public class Album implements Serializable {
     /**
      * Helper to add photo to album
      * 
-     * @param photos
+     * @param photo
      */
     public void addPhoto(Photo photo) {
         if (!this.duplicatePhoto(photo)) {
@@ -77,7 +77,7 @@ public class Album implements Serializable {
     /**
      * Helper to delete a photo to album
      * 
-     * @param photos
+     * @param photo
      */
     public void deletePhoto(Photo photo) {
         if (this.getPhotosInAlbum().contains(photo)) {

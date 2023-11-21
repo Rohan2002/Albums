@@ -57,7 +57,6 @@ public class Tag implements Serializable {
      * Setter for Tag Name
      * 
      * @param tagName
-     * @return
      */
     public void setTagName(String tagName) {
         this.tagName = tagName;
@@ -76,7 +75,6 @@ public class Tag implements Serializable {
      * Setter for Tag Data
      * 
      * @param tagData
-     * @return
      */
     public void setTagData(String tagData) {
         this.tagData = tagData;

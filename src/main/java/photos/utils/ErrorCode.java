@@ -1,4 +1,4 @@
-/*
+/**
  * Provides a modularized way to store application error codes.
  * 
  * @author Rohan Deshpande
@@ -6,7 +6,8 @@
  */
 package main.java.photos.utils;
 
-public enum ErrorCode {
+public enum ErrorCode 
+{
     AUTHERROR("Authentication Error"),
     APPERROR("Application Error"),
     ADMINERROR("Admin Subsystem Error");

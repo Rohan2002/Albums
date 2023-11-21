@@ -41,7 +41,7 @@ public class UserList {
 
     /**
      * Read user list from disk
-     * @return List<User>
+     * @return List
      */
     public List<User> getUserList() {
         return fetchUserList();
@@ -125,7 +125,7 @@ public class UserList {
     /**
      * Update user list on disk with updated user object.
      * 
-     * @param User object
+     * @param updatedUser
      * @return true if User was updated successfully else false.
      */
     public boolean updateUser(User updatedUser){

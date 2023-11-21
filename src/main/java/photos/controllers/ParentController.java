@@ -54,7 +54,7 @@ public class ParentController {
     /**
      * Set the UserList object.
      * 
-     * @param UserList u
+     * @param u
      */
     public void setUpdatedUserList(UserList u) {
         this.userList = u;

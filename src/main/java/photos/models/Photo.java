@@ -118,7 +118,7 @@ public class Photo implements Serializable {
 	/**
 	 * Setter for Photo Name
 	 * 
-	 * @return name of photo
+	 * @param photoName
 	 */
 	public void setName(String photoName) {
 		this.photoName = photoName;
@@ -136,7 +136,7 @@ public class Photo implements Serializable {
 	/**
 	 * Setter for Photo Name
 	 * 
-	 * @return name of photo
+	 * @param file
 	 */
 	public void setFile(File file) {
 		this.photoFile = file;

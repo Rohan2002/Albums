@@ -72,7 +72,7 @@ public class User implements Serializable {
     /**
      * Username setter function
      * 
-     * @return the username of the user
+     * @param username
      */
     public void setUsername(String username) {
         this.username = username;
@@ -117,7 +117,7 @@ public class User implements Serializable {
     /**
      * Setter for the activeAlbum
      * 
-     * @param Album to be set.
+     * @param setAlbum
      */
     public void setActiveAlbum(Album setAlbum) {
         this.activeAlbum = setAlbum;
