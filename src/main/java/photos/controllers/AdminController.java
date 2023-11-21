@@ -1,10 +1,3 @@
-/**
- * This class is responsible for the Admin Subsystem.
- * The Admin subsystem can create, delete and view users on the application.
- * 
- * @author Rohan Deshpande
- * @version 1.0
- */
 package main.java.photos.controllers;
 
 import java.io.IOException;
@@ -21,6 +14,14 @@ import main.java.photos.models.User;
 import main.java.photos.models.UserList;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
+
+/**
+ * This class is responsible for the Admin Subsystem.
+ * The Admin subsystem can create, delete and view users on the application.
+ * 
+ * @author Rohan Deshpande
+ * @version 1.0
+ */
 
 public class AdminController extends ParentController
 {

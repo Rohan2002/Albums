@@ -1,11 +1,11 @@
+package main.java.photos.utils;
+
 /**
  * Provides a modularized way to store application error codes.
  * 
  * @author Rohan Deshpande
  * @version 1.0
  */
-package main.java.photos.utils;
-
 public enum ErrorCode 
 {
     AUTHERROR("Authentication Error"),

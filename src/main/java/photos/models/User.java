@@ -1,3 +1,8 @@
+package main.java.photos.models;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * This class will store the user schema.
  * We store the username, password and userDirectory inside this object.
@@ -7,11 +12,6 @@
  * @author Rohan Deshpande, Saman Sathenjeri
  * @version 1.0
  */
-
-package main.java.photos.models;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 
 public class User implements Serializable {
 

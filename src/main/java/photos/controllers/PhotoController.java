@@ -1,12 +1,4 @@
-/**
- * This class is responsible for the Photo Subsystem.
- * The Photo subsystem can add/delete photos on an album on the application.
- * Added functionality with the power to manipulate the captions of a photo
- * Overall photo viewing and slideshow capabilities
- * 
- * @author Saman Sathenjeri
- * @version 1.0
- */
+
 
 package main.java.photos.controllers;
 
@@ -48,6 +40,15 @@ import java.text.SimpleDateFormat;
 
 import javafx.stage.FileChooser;
 
+/**
+ * This class is responsible for the Photo Subsystem.
+ * The Photo subsystem can add/delete photos on an album on the application.
+ * Added functionality with the power to manipulate the captions of a photo
+ * Overall photo viewing and slideshow capabilities
+ * 
+ * @author Saman Sathenjeri
+ * @version 1.0
+ */
 public class PhotoController extends ParentController implements Initializable {
 
     /**

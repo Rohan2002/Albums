@@ -1,3 +1,7 @@
+package main.java.photos.models;
+
+import java.io.Serializable;
+
 /**
  * Tag is a special string that will be associated with a Photo Object.
  * The format of a Tag is "name:value".
@@ -6,10 +10,6 @@
  * @author Saman Sathenjeri
  * @version 1.0
  */
-package main.java.photos.models;
-
-import java.io.Serializable;
-
 public class Tag implements Serializable {
 
     /**

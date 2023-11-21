@@ -1,11 +1,4 @@
-/**
- * This controller will share the common functions between all controllers.
- * We also created this controller to store the global User, and active Stage (app window).
- * 
- * @author Rohan Deshpande
- * @author Saman Sathenjeri
- * @version 1.0
- */
+
 package main.java.photos.controllers;
 
 import java.io.IOException;
@@ -22,6 +15,14 @@ import main.java.photos.utils.ErrorMessage;
 import main.java.photos.models.User;
 import main.java.photos.models.UserList;
 
+/**
+ * This controller will share the common functions between all controllers.
+ * We also created this controller to store the global User, and active Stage (app window).
+ * 
+ * @author Rohan Deshpande
+ * @author Saman Sathenjeri
+ * @version 1.0
+ */
 public class ParentController {
     /**
      * 

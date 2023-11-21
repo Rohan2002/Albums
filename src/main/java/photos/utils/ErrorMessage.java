@@ -1,13 +1,13 @@
+package main.java.photos.utils;
+
+import javafx.scene.control.Alert;
+
 /**
  * This will trigger a error message in the application if there is to be one.
  * 
  * @author Rohan Deshpande
  * @version 1.0
  */
-package main.java.photos.utils;
-
-import javafx.scene.control.Alert;
-
 public class ErrorMessage {
     /**
      * 

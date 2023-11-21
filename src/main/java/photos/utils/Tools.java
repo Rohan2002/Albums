@@ -1,14 +1,14 @@
+package main.java.photos.utils;
+
+import java.io.File;
+import java.io.IOException;
+
 /**
  * General common utilities function used across the app codebase.
  * 
  * @author Rohan Deshpande, Saman Sathenjeri
  * @version 1.0
  */
-package main.java.photos.utils;
-
-import java.io.File;
-import java.io.IOException;
-
 public class Tools {
     /**
      * Get the data directory from anywhere in the project.

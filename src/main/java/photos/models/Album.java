@@ -1,11 +1,4 @@
-/**
- * This class represents the Album object. 
- * 
- * An album will have a list of Photo. Each user will have a list of Album.
- * @author Saman Sathenjeri
- * @author Rohan Deshpande
- * @version 1.0
- */
+
 package main.java.photos.models;
 
 import java.io.Serializable;
@@ -15,6 +8,14 @@ import java.util.*;
 import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 
+/**
+ * This class represents the Album object. 
+ * 
+ * An album will have a list of Photo. Each user will have a list of Album.
+ * @author Saman Sathenjeri
+ * @author Rohan Deshpande
+ * @version 1.0
+ */
 public class Album implements Serializable {
     /**
      * Name of the Album

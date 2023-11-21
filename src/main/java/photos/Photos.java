@@ -1,3 +1,10 @@
+package main.java.photos;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 /**
  * This class represents the main entry point of our Photo app.
  * This first page that will be displayed is the user authentication.
@@ -6,13 +13,6 @@
  * @author Saman Sathenjeri
  * @version 1.0
  */
-package main.java.photos;
-
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 public class Photos extends Application {
 
     @Override

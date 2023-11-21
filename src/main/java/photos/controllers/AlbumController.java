@@ -1,11 +1,3 @@
-/**
- * This class is responsible for the Album Subsystem.
- * The Album subsystem can create, delete and view albums on the application.
- * 
- * @author Saman Sathenjeri, Rohan Deshpande
- * @version 1.0
- */
-
 package main.java.photos.controllers;
 
 import java.io.IOException;
@@ -32,6 +24,13 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
+/**
+ * This class is responsible for the Album Subsystem.
+ * The Album subsystem can create, delete and view albums on the application.
+ * 
+ * @author Saman Sathenjeri, Rohan Deshpande
+ * @version 1.0
+ */
 public class AlbumController extends ParentController implements Initializable {
     /**
      * The button to create an Album

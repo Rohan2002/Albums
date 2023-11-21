@@ -1,9 +1,4 @@
-/**
- * The Photo class represents a Photo and its metadata (tags, caption, name etc)
- * 
- * @author Rohan Deshpande, Saman Sathenjeri
- * @version 1.0
- */
+
 package main.java.photos.models;
 
 import java.io.File;
@@ -12,6 +7,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * The Photo class represents a Photo and its metadata (tags, caption, name etc)
+ * 
+ * @author Rohan Deshpande, Saman Sathenjeri
+ * @version 1.0
+ */
 public class Photo implements Serializable {
 	/**
 	 * Photo reference

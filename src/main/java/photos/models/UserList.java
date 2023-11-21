@@ -1,13 +1,3 @@
-/**
- * The User list class will list all the "User" objects.
- * The list is an arraylist. 
- * 
- * Since the list needs a write to disk all the time, so we also
- * read the list from disk for all routines to maintain data consistency.
- * 
- * @author Rohan Deshpande
- * @version 1.0
- */
 package main.java.photos.models;
 
 import java.io.File;
@@ -24,6 +14,16 @@ import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 import main.java.photos.utils.Tools;
 
+/**
+ * The User list class will list all the "User" objects.
+ * The list is an arraylist. 
+ * 
+ * Since the list needs a write to disk all the time, so we also
+ * read the list from disk for all routines to maintain data consistency.
+ * 
+ * @author Rohan Deshpande
+ * @version 1.0
+ */
 public class UserList {
     private String userListLocation;
 

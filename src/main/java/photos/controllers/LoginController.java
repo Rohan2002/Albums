@@ -1,10 +1,3 @@
-/**
- * This class is responsible for the Authentication of the user in the
- * application.
- * 
- * @author Rohan Deshpande
- * @version 1.0
- */
 package main.java.photos.controllers;
 
 import java.io.IOException;
@@ -23,6 +16,13 @@ import main.java.photos.utils.ErrorCode;
 import main.java.photos.utils.ErrorMessage;
 import javafx.scene.control.PasswordField;
 
+/**
+ * This class is responsible for the Authentication of the user in the
+ * application.
+ * 
+ * @author Rohan Deshpande
+ * @version 1.0
+ */
 public class LoginController extends ParentController {
     /**
      * Username field for the user auth.
