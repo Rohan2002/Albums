@@ -212,27 +212,6 @@ public class AlbumController extends ParentController implements Initializable {
     }
 
     /**
-     * returns the album that the user is viewing
-     * 
-     * @param event
-     * @return album
-     */
-    private Album getLiveAlbum(ActionEvent event) {
-        albumList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Album>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Album> arg0, Album arg1, Album arg2) {
-                albumChosen = albumList.getSelectionModel().getSelectedItem();
-            }
-
-        });
-        albumChosenTextBox.setText(albumChosen.getAlbumName());
-        numOfPhotosOnAlbumTextBox.setText(Integer.toString(albumChosen.getNumOfPhotosInAlbum()));
-        dateRangesTextBox.setText(albumChosen.getAlbumDateRange());
-        return albumChosen;
-    }
-
-    /**
      * Routine to update the albums view after add/delete/rename.
      * 
      * @param albums

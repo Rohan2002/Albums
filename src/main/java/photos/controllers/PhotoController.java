@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -211,15 +212,10 @@ public class PhotoController extends ParentController implements Initializable {
      */
     public int page = 0;
 
-    // public ImageView[] thumbnails = {thumbnail1, thumbnail2, thumbnail3,
-    // thumbnail4,
-    // thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9,
-    // thumbnail10, thumbnail11, thumbnail12, thumbnail13, thumbnail14};
-
-    // public ArrayList<ImageView> thumbnails = new ArrayList<ImageView>(
-    // Arrays.asList(thumbnail1, thumbnail2, thumbnail3, thumbnail4,
-    // thumbnail5, thumbnail6, thumbnail7, thumbnail8, thumbnail9,
-    // thumbnail10, thumbnail11, thumbnail12, thumbnail13, thumbnail14));
+    /**
+     * Filter album temporary variable
+     */
+    public Album filterAlbum;
 
     /**
      * Takes user back to albums list
@@ -506,6 +502,7 @@ public class PhotoController extends ParentController implements Initializable {
         Date stringToDate = stringToDate(searchDate);
         if (stringToDate != null) {
             Album dateSearchAlbum = this.getActiveUser().getActiveAlbum().searchByDate(stringToDate);
+            filterAlbum = dateSearchAlbum;
             displayAlbum(dateSearchAlbum);
         }
 
@@ -530,6 +527,7 @@ public class PhotoController extends ParentController implements Initializable {
                     "Query format: A=B, A=B OR C=D, A=B AND C=D");
             return;
         }
+        filterAlbum = tagSearchAlbum;
         displayAlbum(tagSearchAlbum);
     }
 
@@ -542,6 +540,8 @@ public class PhotoController extends ParentController implements Initializable {
     private void resetFilter(ActionEvent event) {
         searchDateTextBox.clear();
         searchTagTextBox.clear();
+
+        filterAlbum = this.getActiveUser().getActiveAlbum();
         displayAlbum(this.getActiveUser().getActiveAlbum());
     }
 
@@ -550,11 +550,23 @@ public class PhotoController extends ParentController implements Initializable {
      */
     @FXML
     private void makeNewSelectionAlbum() {
-        if (!this.getActiveUser().duplicateAlbumName(this.getActiveUser().getActiveAlbum().getAlbumName())) {
-            this.getActiveUser().addAlbum(this.getActiveUser().getActiveAlbum());
-        } else {
-            ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
-                    "Please choose another album name.");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Name of the filtered album");
+        dialog.setHeaderText("Please enter the new album name:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String newAlbumName = result.get();
+
+            if (!this.getActiveUser().duplicateAlbumName(newAlbumName)) {
+                Album filteredNewAlbum = new Album(newAlbumName);
+                filteredNewAlbum.setPhotosInAlbum(filterAlbum.getPhotosInAlbum());
+                this.getActiveUser().addAlbum(filteredNewAlbum);
+            } else {
+                ErrorMessage.showError(ErrorCode.AUTHERROR, "Duplicate Album Name",
+                        "Please choose another album name.");
+                return;
+            }
         }
 
     }
@@ -689,6 +701,7 @@ public class PhotoController extends ParentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        filterAlbum = this.getActiveUser().getActiveAlbum();
         displayAlbum(this.getActiveUser().getActiveAlbum());
     }
 }
