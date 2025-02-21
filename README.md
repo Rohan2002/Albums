@@ -28,4 +28,4 @@ can add a caption or tags in the ```name: value``` format.
 
 
 ## Authors
-Rohan Deshpande and Saman Sathenjeri
+Rohan and Saman Sathenjeri
